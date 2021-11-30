@@ -3,7 +3,7 @@ import React from 'react'
 const AppRouter = () => {
   return (
     <>
-      <h1>WaBike</h1>
+      <h1>WaBike Test Firebase Deployment</h1>
     </>
   )
 }
