@@ -4,3 +4,9 @@
     font-family: 'Montserrat', sans-serif;
     box-sizing: border-box;
 }
+
+.WaBikeColors {
+    --primary: #00BB9C;
+    --secundary: #FFFFFF;
+    --marker: #F52D56;
+}
