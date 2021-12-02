@@ -1,9 +1,10 @@
 import React from 'react'
+import { Home } from '../containers/Home'
 
 const AppRouter = () => {
   return (
     <>
-      <h1>WaBike Test Firebase Deployment</h1>
+      <Home />
     </>
   )
 }

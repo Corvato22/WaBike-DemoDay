@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
+    "@chakra-ui/modal": "^1.10.1",
     "@chakra-ui/react": "^1.7.2",
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
