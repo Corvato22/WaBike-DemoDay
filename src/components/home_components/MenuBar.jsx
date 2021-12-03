@@ -25,7 +25,9 @@ export const MenuBar = () => {
         onOpen: onOpenSearch,
         onClose: onCloseSearch
     } = useDisclosure()
+
     const btnRef = React.useRef()
+
     return (
         <>
             <Box bg='#00BB9C' w='100%' h='48px' p={1}>
@@ -58,7 +60,7 @@ export const MenuBar = () => {
                         flexDir='column'
                         justifyContent='center'
                     >
-                        <Avatar size='xl' name='Kent Dodds' ml='6' src='https://bit.ly/kent-c-dodds' />
+                        <Avatar size='xl' name='Jon Mircha' ml='6' src='https://bit.ly/kent-c-dodds' />
                         <Text fontSize='xl' fontWeight='bold' color='white' mt='18px' ml='6'>Jon Mircha</Text>
                     </Box>
 
@@ -95,9 +97,9 @@ export const MenuBar = () => {
                 finalFocusRef={btnRef}
             >
                 <DrawerOverlay />
-                <DrawerContent>
+                <DrawerContent bg='#EFEFEF' borderTopRadius="3xl">
                     {/* <DrawerCloseButton color='white' /> */}
-                    <Box bg='#FFFFFF' w='100%' h='300px' p={4} display='flex' alignItems='center'>
+                    <Box bg='#FFFFFF' w='100%' h='175px' p={4} display='flex' alignItems='center' borderTopRadius="3xl">
                         Aquí va todo lo de las rutas
                     </Box>
 
