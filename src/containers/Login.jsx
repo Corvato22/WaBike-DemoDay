@@ -9,11 +9,19 @@ import {
     InputLeftElement,
     Box,
     Input,
+    Container
 } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
 import { EmailIcon, LockIcon } from '@chakra-ui/icons'
 import { Link } from "react-router-dom";
 import { loginGoogle } from '../actions/loginAction';
-import { LoginBox } from '../styles/LoginStyles';
+import { 
+    LoginBox, 
+    Banner,
+    IconImg,
+    CityContainer2
+} from '../styles/LoginStyles';
+
 
 export const Login = () => {
 
@@ -29,9 +37,19 @@ export const Login = () => {
 
     return (
         <>
+        <Banner>
+            <IconImg src='https://res.cloudinary.com/diqhctpcx/image/upload/v1638230356/WaBike/wabike_logo_oshukd.svg' />
+            <CityContainer2></CityContainer2>
+        </Banner>
+        <Container>
+
             <LoginBox >
                 <VStack mt={8} spacing="3px"  >
-
+                <Heading as='h4' size='md'>
+                    Ingrese su correo y contraseña
+                    </Heading>
+                    
+                    <hr />
                     <Box my={8} textAlign='left' bg='white'>
                         <form>
 
@@ -78,37 +96,48 @@ export const Login = () => {
                                 bg='#00BB9C'
                                 width='full'
                                 mt={4}>
-                                Ingresar
+                                <Link to="/mylocation">
+                                Iniciar Sesión
+                                </Link>
                             </Button>
                             <hr />
                             <Button
-                                variantColor="teal"
+
                                 variant="outline"
                                 width="full"
                                 mt={4}
                                 bg='#dfe3ee'
+                                colorScheme='red'
+
+                                leftIcon={<i className="fab fa-google-plus-g"></i>}
                                 onClick={handleLoginGoogle}
                             >
                                 Ingresar con Google
                             </Button>
                             <hr />
                             <Button
-                                variantColor="teal"
+
                                 variant="outline"
                                 // type="submit"
                                 width="full"
                                 mt={4}
                                 bg='#dfe3ee'
+                                colorScheme='facebook'
+                                leftIcon={<i className="fab fa-facebook-f"></i>}
                             >
                                 Ingresar con Facebook
+                                
                             </Button>
                             <hr />
                             <span>¿Aún no tienes cuenta? <Link to="/signup">Registrate aquí</Link></span>
 
+
                         </form>
                     </Box>
                 </VStack>
+                <br />
             </LoginBox>
+            </Container>
         </>
     )
 }

@@ -1,47 +1,121 @@
 import React from 'react'
 import {
   Button,
-  FormControl,
-  FormLabel,
-  Input
+  VStack,
+  InputGroup,
+  InputRightElement,
+  InputLeftElement,
+  Box,
+  Input,
+  Container
 } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
+import { EmailIcon, LockIcon } from '@chakra-ui/icons'
+import { 
+  LoginBox2,
+  Banner,
+  IconImg,
+  CityContainer2
+ } from '../styles/LoginStyles';
 
 export const SignUp = () => {
 
-  const handleSubmit = () => {
 
-  }
-
+  const [show, setShow] = React.useState(false)
+  const handleClick = () => setShow(!show)
   return (
-    <div>
-      <h1>Crear cuenta</h1>
-      <FormControl onSubmit={handleSubmit} id='email'>
+    <>
+      <Banner>
+        <IconImg src='https://res.cloudinary.com/diqhctpcx/image/upload/v1638230356/WaBike/wabike_logo_oshukd.svg' />
+        <CityContainer2></CityContainer2>
+      </Banner>
+      <Container>
+        <LoginBox2 >
+          <VStack mt={8} spacing="3px"  >
+            <Heading as='h4' size='md'>
+              Regístrate
+            </Heading>
 
-        <Input type='text' placeholder="Tu Nombre" />
+            <hr />
+            <Box my={8} textAlign='left' bg='white'>
+              <form>
 
-        
-          <FormLabel htmlFor="email">Email</FormLabel>
-          <Input id="email" type='email' placeholder="Tu email" isRequired />
-        
+                <Box>
+                  <InputGroup size='md'  >
+                    <InputLeftElement
+                      pointerEvents='none'
+                      children={<EmailIcon color='gray.300' />}
+                    />
+                    <Input
+                      pr='4.5rem'
+                      type='email'
+                      placeholder='Ingresa tu correo electrónico'
+                    />
+                  </InputGroup>
+                  <InputGroup size='md'>
+                    <InputLeftElement
+                      pointerEvents='none'
+                      children={<LockIcon color='gray.300' />}
+                    />
+                    <Input
+                      pr='4.5rem'
+                      type={show ? 'text' : 'password'}
+                      placeholder='Ingresa tu contraseña'
+                    />
+                    <InputRightElement width='4.5rem'>
+                      <Button h='1.75rem' size='sm' onClick={handleClick}>
+                        {show ? 'Hide' : 'Show'}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                  <InputGroup size='md'>
+                    <InputLeftElement
+                      pointerEvents='none'
+                      children={<LockIcon color='gray.300' />}
+                    />
+                    <Input
+                      pr='4.5rem'
+                      type={show ? 'text' : 'password'}
+                      placeholder='Repite tu contraseña'
+                    />
+                    <InputRightElement width='4.5rem'>
+                      <Button h='1.75rem' size='sm' onClick={handleClick}>
+                        {show ? 'Hide' : 'Show'}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                  <InputGroup size='md'  >
+                    <Input pr='4.5rem' type="file" placeholder="Tu Foto" />
+                  </InputGroup>
+                </Box>
+                <hr />
 
-  
-        <Input type="password"  placeholder="Tu contraseña" />
+                {/* <Stack isInline justifyContent='space-between' mt={4}>
+                        <Box>
+                            <Checkbox>Remember Me</Checkbox>
+                        </Box>
+                        <Box>
+                            <Link color="teal">Forgot your password?</Link>
+                        </Box>
+                    </Stack> */}
 
-        <Input type="password" placeholder="Tu contraseña de nuevo" />
-
-        <Input type="file" placeholder="Tu Foto" />
-
-        <Button
-          mt={4}
-          colorScheme='teal'
-          type='submit'
-        >
-          Crea tu cuenta
-        </Button>
+                <Button
+                  bg='#00BB9C'
+                  width='full'
+                  mt={4}>
+                  Crear cuenta
+                </Button>
 
 
-      </FormControl>
-    </div>
+
+
+              </form>
+            </Box>
+          </VStack>
+          <br />
+        </LoginBox2>
+      </Container>
+    </>
   )
 }
 
