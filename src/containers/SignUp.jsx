@@ -7,9 +7,12 @@ import {
   InputLeftElement,
   Box,
   Input,
-  Container
+  Heading,
+  Container,
+  useToast,
+  // Alert,
+  // AlertIcon
 } from '@chakra-ui/react'
-import { Heading } from '@chakra-ui/react'
 import { EmailIcon, LockIcon } from '@chakra-ui/icons'
 import {
   LoginBox2,
@@ -17,11 +20,68 @@ import {
   IconImg,
   CityContainer2
 } from '../styles/LoginStyles';
+import { useFormik } from 'formik'
+import { cloudinaryUpload } from '../helpers/cloudinaryUpload'
+import { useDispatch } from 'react-redux';
+import { registerEmailPassword } from '../actions/registerAction';
 
 export const SignUp = () => {
 
+  const dispatch = useDispatch()
+
   const [show, setShow] = React.useState(false)
   const handleClick = () => setShow(!show)
+  const toast = useToast()
+
+  const handleFileChanged = (evt) => {
+    const file = evt.target.files[0];
+    cloudinaryUpload(file)
+      .then(response => {
+        formik.values.usrImg = response
+        console.log(response);
+        console.log('value usrImg en formik', formik)
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+      password2: '',
+      usrImg: ''
+    },
+
+    // const {name, email, password, usrImg} = formik.values
+
+
+    onSubmit: (data) => {
+      console.log('usrImg usr', data.usrImg)
+      console.log('pw 1:', data.password + ' pw 2:', data.password2)
+
+      if (data.password !== data.password2 || data.password.length < 6) {
+        toast({
+          title: 'Error de contraseñas',
+          description: "Las contraseñas deben tener al menos 6 caracteres y coincidir entre ellas.",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+      } else {
+        toast({
+          title: 'Cuenta Creada.',
+          description: "Tu cuenta ha sido creada exitosamente.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
+        dispatch(registerEmailPassword(data.email, data.password, data.name, data.usrImg))
+      }
+    }
+  })
 
   return (
     <>
@@ -39,8 +99,24 @@ export const SignUp = () => {
 
             <Box my={8} bg='white'>
 
-              <form>
+              <form onSubmit={formik.handleSubmit}>
                 <Box>
+                  <InputGroup size='md' my='10px'>
+                    <InputLeftElement
+                      pointerEvents='none'
+                      children={<i className="fas fa-user"></i>}
+                    />
+                    <Input
+                      pr='4.5rem'
+                      type='text'
+                      name='name'
+                      focusBorderColor='#00BB9C'
+                      placeholder='Ingresa tu nombre'
+                      onChange={formik.handleChange}
+                      required
+                    />
+                  </InputGroup>
+
                   <InputGroup size='md' my='10px'>
                     <InputLeftElement
                       pointerEvents='none'
@@ -49,8 +125,11 @@ export const SignUp = () => {
                     <Input
                       pr='4.5rem'
                       type='email'
+                      name='email'
                       focusBorderColor='#00BB9C'
                       placeholder='Ingresa tu correo'
+                      onChange={formik.handleChange}
+                      required
                     />
                   </InputGroup>
 
@@ -62,8 +141,11 @@ export const SignUp = () => {
                     <Input
                       pr='4.5rem'
                       type={show ? 'text' : 'password'}
+                      name='password'
                       focusBorderColor='#00BB9C'
                       placeholder='Ingresa tu contraseña'
+                      onChange={formik.handleChange}
+                      required
                     />
                     <InputRightElement width='4.5rem'>
                       <Button h='1.75rem' size='sm' color='#00BB9C' onClick={handleClick}
@@ -73,7 +155,7 @@ export const SignUp = () => {
                           transform: 'scale(0.95)',
                           borderColor: '#00BB9C',
                         }}>
-                        {show ? <i class="fas fa-eye-slash"></i> : <i class="fas fa-eye"></i>}
+                        {show ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
                       </Button>
                     </InputRightElement>
                   </InputGroup>
@@ -86,8 +168,11 @@ export const SignUp = () => {
                     <Input
                       pr='4.5rem'
                       type={show ? 'text' : 'password'}
+                      name='password2'
                       focusBorderColor='#00BB9C'
                       placeholder='Repite tu contraseña'
+                      onChange={formik.handleChange}
+                      required
                     />
                     <InputRightElement width='4.5rem'>
                       <Button h='1.75rem' size='sm' color='#00BB9C' onClick={handleClick}
@@ -97,13 +182,13 @@ export const SignUp = () => {
                           transform: 'scale(0.95)',
                           borderColor: '#00BB9C',
                         }}>
-                        {show ? <i class="fas fa-eye-slash"></i> : <i class="fas fa-eye"></i>}
+                        {show ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
                       </Button>
                     </InputRightElement>
                   </InputGroup>
 
                   <InputGroup size='md' my='10px'>
-                    <Input pr='4.5rem' type="file" placeholder="Tu Foto" />
+                    <Input onChange={handleFileChanged} name='usrImg' pr='4.5rem' type="file" placeholder="Tu Foto" />
                   </InputGroup>
 
                 </Box>
@@ -118,6 +203,8 @@ export const SignUp = () => {
                     </Stack> */}
 
                 <Button
+                  value="Save"
+                  type="submit"
                   variant="outline"
                   bg='#00BB9C'
                   color='white'

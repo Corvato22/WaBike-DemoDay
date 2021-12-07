@@ -15,23 +15,39 @@ import {
 import { Heading } from '@chakra-ui/react'
 import { EmailIcon, LockIcon } from '@chakra-ui/icons'
 import { Link } from "react-router-dom";
-import { loginGoogle } from '../actions/loginAction';
+import { loginGoogle, loginFacebook, loginEmailPassword } from '../actions/loginAction';
 import {
     LoginBox,
     Banner,
     IconImg,
     CityContainer2
 } from '../styles/LoginStyles';
+import { useFormik } from 'formik';
 
 export const Login = () => {
 
     const dispatch = useDispatch()
 
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+
+        onSubmit: (data) => {
+            console.log(data)
+            dispatch(loginEmailPassword(data.email, data.password))
+        }
+    })
+
     const handleLoginGoogle = (evt) => {
         evt.preventDefault()
         dispatch(loginGoogle())
     }
-
+    const handleLoginFacebook = (evt) => {
+        evt.preventDefault()
+        dispatch(loginFacebook())
+    }
     const [show, setShow] = React.useState(false)
     const handleClick = () => setShow(!show)
 
@@ -51,7 +67,7 @@ export const Login = () => {
 
                         <Box my={8} bg='white'>
 
-                            <form>
+                            <form onSubmit={formik.handleSubmit}>
                                 <Box>
                                     <InputGroup size='md' my='10px'>
                                         <InputLeftElement
@@ -61,8 +77,10 @@ export const Login = () => {
                                         <Input
                                             pr='4.5rem'
                                             type='email'
+                                            name='email'
                                             focusBorderColor='#00BB9C'
                                             placeholder='Ingresa tu correo'
+                                            onChange={formik.handleChange}
                                         />
                                     </InputGroup>
                                     <InputGroup size='md' my='10px'>
@@ -73,8 +91,10 @@ export const Login = () => {
                                         <Input
                                             pr='4.5rem'
                                             type={show ? 'text' : 'password'}
+                                            name='password'
                                             focusBorderColor='#00BB9C'
                                             placeholder='Ingresa tu contraseña'
+                                            onChange={formik.handleChange}
                                         />
                                         <InputRightElement width='4.5rem'>
                                             <Button h='1.75rem' size='sm' color='#00BB9C' onClick={handleClick}
@@ -84,7 +104,7 @@ export const Login = () => {
                                                     transform: 'scale(0.95)',
                                                     borderColor: '#00BB9C',
                                                 }}>
-                                                {show ? <i class="fas fa-eye-slash"></i> : <i class="fas fa-eye"></i>}
+                                                {show ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
                                             </Button>
                                         </InputRightElement>
                                     </InputGroup>
@@ -102,6 +122,7 @@ export const Login = () => {
                                 <Button
                                     variant="outline"
                                     bg='#00BB9C'
+                                    type="submit"
                                     color='white'
                                     colorScheme='#edf2f7'
                                     width='full'
@@ -114,9 +135,9 @@ export const Login = () => {
                                         borderColor: '#00BB9C',
                                     }}
                                 >
-                                    <Link to="/mylocation">
-                                        Iniciar Sesión
-                                    </Link>
+                                    {/* <Link to="/mylocation"> */}
+                                    Iniciar Sesión
+                                    {/* </Link> */}
                                 </Button>
 
                                 <Button
@@ -148,6 +169,7 @@ export const Login = () => {
                                     color='white'
                                     colorScheme='#385898'
                                     leftIcon={<i className="fab fa-facebook-f"></i>}
+                                    onClick={handleLoginFacebook}
                                     _hover={{ bg: '#edf2f7', color: '#385898' }}
                                     _active={{
                                         bg: '#edf2f7',

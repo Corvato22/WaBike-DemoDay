@@ -27,3 +27,6 @@
     color: #00BB9C;
     animation: loading 10s linear;
 }
+.fa-user{
+    color: lightgray;
+}

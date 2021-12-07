@@ -77,8 +77,9 @@ const LogoImg = styled.img`
 const LogoText = styled.h1`
     text-align: center;
     font-family: 'Kodchasan', sans-serif;
+    -webkit-text-stroke: 2px #FFFFFF;
     font-size: 70px;
-    color: #fff;
+    color: #FFFFFF;
 `
 export {
     Container,
