@@ -1,5 +1,5 @@
-import { getAuth, signInWithEmailAndPassword, signInWithPopup } from "@firebase/auth"
-import { google, facebook} from "../firebase/firebase"
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, signOut } from "@firebase/auth"
+import { google, facebook } from "../firebase/firebase"
 import { types } from "../types/types"
 
 export const login = (id, displayName) => {
@@ -41,17 +41,27 @@ export const loginFacebook = () => {
     }
 }
 
-export const loginEmailPassword = (email, password) =>{
-    return(dispatch) =>{
-        const auth= getAuth()
+export const loginEmailPassword = (email, password) => {
+    return (dispatch) => {
+        const auth = getAuth()
         signInWithEmailAndPassword(auth, email, password)
-        .then (({user})=>{
-            dispatch(login(user.uid, user.displayName))
-            console.log('Bienvenido ' + user.displayName)
-        })
-        .catch(e=>{
-            console.log(e)
-            console.log('El usuario no existe')
-        })
+            .then(({ user }) => {
+                dispatch(login(user.uid, user.displayName))
+                console.log('Bienvenido ' + user.displayName)
+            })
+            .catch(e => {
+                console.log(e)
+                console.log('El usuario no existe')
+            })
     }
 }
+export const startLogout = () => {
+    return async (dispatch) => {
+        const auth = getAuth();
+        await signOut(auth)
+        dispatch(logout())
+    }
+}
+export const logout = () => ({
+    type: types.logout
+})

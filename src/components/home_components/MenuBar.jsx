@@ -11,8 +11,12 @@ import {
     // DrawerHeader,
     // DrawerCloseButton,
 } from '@chakra-ui/react'
+import { useDispatch } from 'react-redux'
+import { startLogout } from '../../actions/loginAction'
 
 export const MenuBar = () => {
+    const dispatch = useDispatch()
+    // const {name} = useSelector(state => state.auth)
 
     const {
         isOpen: isOpenMenu,
@@ -27,6 +31,10 @@ export const MenuBar = () => {
     } = useDisclosure()
 
     const btnRef = React.useRef()
+
+    const handleLogout = () => {
+        dispatch(startLogout())
+    }
 
     return (
         <>
@@ -82,7 +90,7 @@ export const MenuBar = () => {
                                 <SettingsIcon w={6} h={6} mr='3' />
                                 <Text fontSize='xl'>Configuraciones</Text>
                             </Flex>
-                            <Flex my='5' _active={{ transform: 'scale(0.95)' }}>
+                            <Flex my='5' onClick={handleLogout} _active={{ transform: 'scale(0.95)' }}>
                                 <ExternalLinkIcon w={6} h={6} mr='3' color='red' />
                                 <Text fontSize='xl' color='red'>Cerrar Sesión</Text>
                             </Flex>
