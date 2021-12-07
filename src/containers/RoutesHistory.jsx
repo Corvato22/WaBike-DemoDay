@@ -1,5 +1,5 @@
-import { ChevronLeftIcon, TriangleUpIcon, TriangleDownIcon } from '@chakra-ui/icons'
-import { Box, Flex, Heading, HStack, Text } from '@chakra-ui/layout'
+import { ChevronLeftIcon } from '@chakra-ui/icons'
+import { Box, Flex, Heading, Center, Text } from '@chakra-ui/layout'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -13,22 +13,24 @@ export const RoutesHistory = () => {
                     <Heading mb='25px' color='white'>Historial</Heading>
                 </Flex>
             </Box>
-            <Box boxShadow='md' m='3' maxW="sm" borderWidth="0px" borderRadius="lg" overflow="hidden">
-                <HStack spacing='5px'>
+            <Center>
+            <Box justifyContent='center' boxShadow='md' m='3' w="sm" borderWidth="0px" borderRadius="lg" overflow="hidden">
+                <Flex>
                     <Box alignItems='center' rounded="md" p='5' m="3" as="a">
                         <Flex >
-                            <TriangleUpIcon color='green' />
+                            <i justify='center' style={{color: 'green', width: '15px'}} className="fas fa-map-pin"></i>
                             <Text ml="5" mb="3" as="h5" size="md">Estadio</Text>
                         </Flex>
                         <Flex>
-                            <TriangleDownIcon color='red' />
+                            <i style={{color : 'red', width: '15px'}} className="fas fa-map-marker-alt"></i>
                             <Text ml="5" mb="3" as="h5" size="md">Universidad Nacional</Text>
                         </Flex>
-
                     </Box>
-                </HStack>
-
+                </Flex>
             </Box>
+            </Center>
+
+            
         </>
     )
 }

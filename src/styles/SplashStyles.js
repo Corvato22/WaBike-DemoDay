@@ -36,9 +36,9 @@ const Container = styled.div`
     margin: 0;
     padding: 0;
     
-    background-image: -moz-radial-gradient(center, circle closest-corner, #00BB9C 0%, #000 100%);
-	background-image: -o-radial-gradient(center, circle closest-corner, #00BB9C 0%, #000 100%);
-	background-image: -webkit-radial-gradient(center, circle closest-corner, #00BB9C 0%, #000 100%);
+    background-image: -moz-radial-gradient(center, circle closest-corner, #00A49C 10%, #002422  100%);
+	background-image: -o-radial-gradient(center, circle closest-corner, #00A49C 10%, #002422  100%);
+	background-image: -webkit-radial-gradient(center, circle closest-corner, #00A49C 10%, #002422  100%);
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	-ms-user-select:none;

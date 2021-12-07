@@ -135,9 +135,9 @@ export const Login = () => {
                                         borderColor: '#00BB9C',
                                     }}
                                 >
-                                    {/* <Link to="/mylocation"> */}
+                                    <Link to="/mylocation">
                                     Iniciar Sesión
-                                    {/* </Link> */}
+                                    </Link>
                                 </Button>
 
                                 <Button
@@ -161,7 +161,6 @@ export const Login = () => {
                                 </Button>
 
                                 <Button
-                                    // type="submit"
                                     variant="outline"
                                     width="full"
                                     mt={4}
