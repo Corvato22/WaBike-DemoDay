@@ -16,24 +16,32 @@ const MyLocation = () => {
     return (
         <>
             <Banner2>
-                <IconCelu src='https://i.imgur.com/Duu31WM.png' />
+                <IconCelu src='https://res.cloudinary.com/dzyyi4p7x/image/upload/v1638697609/WaBike/MyLocation_av5rub.svg' />
             </Banner2>
             <Container>
-                <VStack mt={8} spacing="3px" textAlign='center' >
-                    <Heading as='h2' size='2xl' fontFamily='Montserrat' >
+                <VStack mt='25%' spacing='3px' textAlign='center' >
+                    <Heading as='h2' size='2xl' fontFamily='Montserrat' color='#242E42' >
                         ¡Hola, un placer conocerte!
                     </Heading>
                     <br />
-                    <Text fontSize='2xl'>Encuentra las mejores rutas para llegar a tu destino. ¡Seguro y rápido!</Text>
+                    <Text fontSize='2xl' color='#262628'>Encuentra las mejores rutas para llegar a tu destino. ¡Seguro y rápido!</Text>
                     <br />
-                    <Text fontSize='2xl'>Déjanos saber tu úbicación para empezar</Text>
+                    <Text fontSize='2xl' color='#262628'>Déjanos saber tu úbicación para empezar</Text>
                     <br />
                     <Button
                         variant="outline"
-                        width="full"
+                        bg='#00BB9C'
+                        color='white'
+                        colorScheme='#edf2f7'
+                        width='full'
                         mt={4}
-                        bg='#dfe3ee'
-                        colorScheme='cyan'
+                        _hover={{ bg: '#edf2f7', color: '#00BB9C' }}
+                        _active={{
+                            bg: '#edf2f7',
+                            color: '#00BB9C',
+                            transform: 'scale(0.95)',
+                            borderColor: '#00BB9C',
+                        }}
                         leftIcon={<i className="fas fa-location-arrow"></i>}
                     >
                         <Link to="/mylocation2">

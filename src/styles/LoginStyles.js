@@ -1,20 +1,18 @@
 import styled from 'styled-components'
 
 const LoginBox = styled.div`
-    margin: 45px 30px;
+    margin: 70px 0px;
     border: 1px solid #DEDEDE;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
 `
 const LoginBox2 = styled.div`
-    margin: 80px 10px;
+    margin: 70px 0px;
     border: 1px solid #DEDEDE;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-radius: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
 `
 const Banner = styled.div`
     background: #00A49C;
@@ -33,16 +31,15 @@ const IconImg = styled.img`
 const CityContainer2 = styled.div`
     width: 100%;
     height: 193px;
-    background:  url('https://i.imgur.com/jpps5it.png');
+    background:  url('https://res.cloudinary.com/dzyyi4p7x/image/upload/v1638697443/WaBike/CityBackground_etop3l.svg');
     background-repeat: repeat-x;
     
-    border: red;
     outline: none;
     position: relative;
     bottom:0px;
-
+    
     @media (max-width: 400px) {
-        bottom:-45px;
+        bottom:-30px;
     }
 `
 

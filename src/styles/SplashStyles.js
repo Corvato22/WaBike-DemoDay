@@ -2,18 +2,32 @@ import styled from 'styled-components'
 // import {Link} from 'react-router-dom'
 
 const Button = styled.button`
-    background: #00A49C;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background: #00BB9C;
+    box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
 
      width: 190px;
      height: 45px;
-     color: #fff;
+     color: #FFFFFF;
+     transition: 0.5s;
+
+     &:hover{
+        background-color: #edf2f7;
+        color: #00BB9C;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+     }
+
+     &:active{
+        background-color: #edf2f7;
+        color: #00BB9C;
+        transform: scale(0.95);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+     }
 `
 const Container = styled.div`
-
-    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,9 +36,9 @@ const Container = styled.div`
     margin: 0;
     padding: 0;
     
-    background-image: -moz-radial-gradient(center, circle closest-corner, #00BB9C 0%, #000 100%);
-	background-image: -o-radial-gradient(center, circle closest-corner, #00BB9C 0%, #000 100%);
-	background-image: -webkit-radial-gradient(center, circle closest-corner, #00BB9C 0%, #000 100%);
+    background-image: -moz-radial-gradient(center, circle closest-corner, #00A49C 10%, #002422  100%);
+	background-image: -o-radial-gradient(center, circle closest-corner, #00A49C 10%, #002422  100%);
+	background-image: -webkit-radial-gradient(center, circle closest-corner, #00A49C 10%, #002422  100%);
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	-ms-user-select:none;
@@ -33,25 +47,26 @@ const Container = styled.div`
 `
 const CityContainer = styled.div`
     
-    
     width: 100%;
     height: 193px;
-    background:  url('https://i.imgur.com/jpps5it.png');
+    background:  url('https://res.cloudinary.com/dzyyi4p7x/image/upload/v1638697443/WaBike/CityBackground_etop3l.svg');
     background-repeat: repeat-x;
     
-    border: red;
-    outline: none;
+    position: absolute;
+    bottom: 0px;
+`
+const SpaceCityContainer = styled.div`
+    width: 100%;
+    height: 193px;
+    background-repeat: repeat-x;
+    
     position: relative;
-    bottom:-48px;
-
-    @media (max-width: 400px) {
-        bottom:-55px;
-    }
+    bottom: 0px;
 `
 const LogoContainer = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 
 const LogoImg = styled.img`
@@ -62,28 +77,16 @@ const LogoImg = styled.img`
 const LogoText = styled.h1`
     text-align: center;
     font-family: 'Kodchasan', sans-serif;
+    -webkit-text-stroke: 2px #FFFFFF;
     font-size: 70px;
-    color: #fff;
-
-    @keyframes loading {
-	from { max-width: 0; }
-}
-
-h1:before {
-	content: attr(data-content);
-	position: absolute;
-	overflow: hidden;
-	max-width: 4em;
-	color: #00BB9C;
-	animation: loading 10s linear;
-}
+    color: #FFFFFF;
 `
 export {
-    // Button,
     Container,
     LogoContainer,
     LogoImg,
     LogoText,
     CityContainer,
-    Button
+    Button,
+    SpaceCityContainer
 }

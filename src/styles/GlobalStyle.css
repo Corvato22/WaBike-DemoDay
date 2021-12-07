@@ -10,3 +10,23 @@
     --secundary: #FFFFFF;
     --marker: #F52D56;
 }
+
+/* SplashScreen Animation */
+@keyframes loading {
+    from {
+        max-width: 0;
+    }
+}
+
+.LogoText:before {
+    content: attr(data-content);
+    font-weight: bold;
+    position: absolute;
+    overflow: hidden;
+    max-width: 4em;
+    color: #00BB9C;
+    animation: loading 10s linear;
+}
+.fa-user{
+    color: lightgray;
+}
