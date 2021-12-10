@@ -1,89 +1,75 @@
-import React, { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Home } from '../containers/Home'
+import React, { useEffect, useState } from 'react'
+import DashboardRoutes from './DashboardRoutes'
+import { PrivateRoute } from './PrivateRouter'
+import { PublicRoute } from './PublicRouter'
 import { Login } from '../containers/Login'
 import { SignUp } from '../containers/SignUp'
 import { SplashScreen } from '../containers/SplashScreen'
-import { MyAccount } from '../components/account_components/MyAccount'
-import { Settings } from '../containers/Settings'
-import { RoutesHistory } from '../containers/RoutesHistory'
-import { login } from '../actions/loginAction';
-import { useDispatch } from 'react-redux';
-import MyLocation from '../containers/MyLocation'
-import MyLocation2 from '../containers/MyLocation2'
-// import { PrivateRoute } from './PrivateRoute'
-// import { PublicRoute } from './PublicRoute'
+import { useDispatch } from 'react-redux'
+import { getAuth, onAuthStateChanged } from '@firebase/auth'
+// import { loginEmailPassword } from '../actions/loginAction'
 
 const AppRouter = () => {
+    const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
+    const [checking, setChecking] = useState(true)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  const [checking, setChecking] = useState(true)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+    useEffect(() => {
 
-  useEffect(() => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            console.log(user ? 'Logueado' : 'No Logueado');
+            //si el user?.uid existe significa que estoy auntenticado
+            //el signo ? evalua si el user tiene algo pregunta si existe el uid
+            if (user?.uid) {
+                //dispatch(loginEmailPassword(user.uid, user.displayName));    //? ¿Para qué era?
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false)
+            }
+            setChecking(false)
+        })
 
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      console.log(user);
-      //si el user?.uid existe significa que estoy auntenticado
-      //el signo ? evalua si el user tiene algo pregunta si existe el uid
-      if (user?.uid) {
-        dispatch(login(user.uid, user.displayName));
-        setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false)
-      }
-      setChecking(false)
-    })
+    }, [dispatch, setChecking, setIsLoggedIn])
 
-  }, [dispatch, setChecking, setIsLoggedIn])
+    if (checking) {
+        return (
+            <h1>Espere...</h1>
+        )
+    }
 
-  if (checking) {
+
     return (
-      <h1>Espere...</h1>
-    )
-  }
+        <>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={
+                        <PublicRoute isAuthenticated={isLoggedIn}>
+                            <SplashScreen />
+                        </PublicRoute>
+                    } />
 
-  return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<SplashScreen />} />
-          <Route path="/home" element={<Home />} />
-          <Route
-            path="/mylocation"
-            
-            element={<MyLocation />} />
-          <Route
-            path="/mylocation2"
-            
-            element={<MyLocation2 />} />
-          <Route
-            path="/login"
-            
-            element={<Login />} />
-          <Route
-            path="/signup"
-            
-            element={<SignUp />} />
-          <Route
-            path="/myaccount"
-            
-            element={<MyAccount />} />
-          <Route
-            path="/settings"
-            
-            element={<Settings />} />
-          <Route
-            path="/history"
-            
-            element={<RoutesHistory />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
+                    <Route path="/login" element={
+                        <PublicRoute isAuthenticated={isLoggedIn}>
+                            <Login />
+                        </PublicRoute>
+                    } />
+                    <Route path="/signup" element={
+                        <PublicRoute isAuthenticated={isLoggedIn}>
+                            <SignUp />
+                        </PublicRoute>
+                    } />
+                    <Route path="/*" element={
+                        <PrivateRoute isAuthenticated={isLoggedIn}>
+                            <DashboardRoutes />
+                        </PrivateRoute>
+                    } />
+                </Routes>
+            </BrowserRouter>
+        </>
+    )
 }
 
 export default AppRouter

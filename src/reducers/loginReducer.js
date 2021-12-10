@@ -8,8 +8,9 @@ export const loginReducer = (state = {}, action) => {
                 id: action.payload.id,
                 name: action.payload.displayName,
             }
-        case types.logout:
-            return { }
+            case types.logout:
+            
+                return{ }
         default:
             return state
     }

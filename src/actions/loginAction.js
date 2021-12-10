@@ -1,6 +1,7 @@
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, signOut } from "@firebase/auth"
-import { google, facebook } from "../firebase/firebase"
+import { google, facebook, db } from "../firebase/firebase"
 import { types } from "../types/types"
+import { addDoc, collection, getDocs, query, where } from "@firebase/firestore";
 
 export const login = (id, displayName) => {
     return {
@@ -11,6 +12,9 @@ export const login = (id, displayName) => {
     }
 }
 
+
+// let usrExistFirestore = false
+
 export const loginGoogle = () => {
 
     return (dispatch) => {
@@ -19,9 +23,15 @@ export const loginGoogle = () => {
             .then(({ user }) => {
                 console.log(user);
                 dispatch(login(user.uid, user.displayName))  //* Manda en el dispatch login los parametros desestructurados del user
+                dispatch(registerUserAsync({
+                    name: user.displayName,
+                    email: user.email,
+                    usrImg: user.photoURL,
+                    uid: user.uid
+                }))
             })
             .catch(err => {
-                console.log(err);
+                console.log(err)
             })
     }
 }
@@ -49,12 +59,13 @@ export const loginEmailPassword = (email, password) => {
                 dispatch(login(user.uid, user.displayName))
                 console.log('Bienvenido ' + user.displayName)
             })
-            .catch(e => {
-                console.log(e)
+            .catch(err => {
+                console.log(err)
                 console.log('El usuario no existe')
             })
     }
 }
+
 export const startLogout = () => {
     return async (dispatch) => {
         const auth = getAuth();
@@ -62,6 +73,45 @@ export const startLogout = () => {
         dispatch(logout())
     }
 }
+
 export const logout = () => ({
     type: types.logout
 })
+
+
+//user exist in STORE? Funct
+const isRegisteredAsync = (email) => {
+
+    return async (dispatch) => {
+
+        const userCollection = collection(db, "users");
+        const q = query(userCollection, where("email", "==", email))
+        const datos = await getDocs(q);
+        console.log('query response', datos)
+
+    }
+}
+
+//SAVING USER TO STORE
+export const registerUserAsync = (newUser) => {
+
+    return (dispatch) => {
+        dispatch(isRegisteredAsync(newUser.email))
+        addDoc(collection(db, "users"), newUser)
+            .then(resp => {
+                dispatch(registerUserSync(newUser))
+                console.log("new User data", newUser)
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+}
+
+export const registerUserSync = (newUser) => {
+    return {
+        type: types.register,
+        payload: newUser
+    }
+}
+
