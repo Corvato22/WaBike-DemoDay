@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from "@firebase/auth"
 import { types } from "../types/types"
+import Swal from 'sweetalert2'
 
 export const register = (email, password, name, usrImg) => {
     return {
@@ -24,6 +25,7 @@ export const registerEmailPassword = (email, password, name, usrImg) => {
 
             .catch(error => {
                 console.log(error);
+                Swal.fire('Error',error.code == 'auth/email-already-in-use' && 'The email address is already in use by another account.', 'error' )
             })
     }
 }
