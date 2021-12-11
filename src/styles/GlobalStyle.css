@@ -30,11 +30,7 @@
 .fa-user{
     color: lightgray;
 }
-#mapContainer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .leaflet-container{
     width: 100%;
