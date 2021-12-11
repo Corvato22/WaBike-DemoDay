@@ -75,7 +75,7 @@ export const Login = () => {
                                             children={<EmailIcon color='gray.300' />}
                                         />
                                         <Input
-                                            required={true}
+                                            // required={true}
                                             pr='4.5rem'
                                             type='email'
                                             name='email'
@@ -90,7 +90,7 @@ export const Login = () => {
                                             children={<LockIcon color='gray.300' />}
                                         />
                                         <Input
-                                            required={true}
+                                            // required={true}
                                             pr='4.5rem'
                                             type={show ? 'text' : 'password'}
                                             name='password'
