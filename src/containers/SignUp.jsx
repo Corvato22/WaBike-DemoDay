@@ -9,6 +9,7 @@ import {
   Input,
   Heading,
   Container,
+  Text,
   useToast,
   // Alert,
   // AlertIcon
@@ -20,6 +21,7 @@ import {
   IconImg,
   CityContainer2
 } from '../styles/LoginStyles';
+import { Link } from "react-router-dom";
 import { useFormik } from 'formik'
 import { cloudinaryUpload } from '../helpers/cloudinaryUpload'
 import { useDispatch } from 'react-redux';
@@ -221,6 +223,12 @@ export const SignUp = () => {
                 >
                   Crear Cuenta
                 </Button>
+                <Text my='15px' align='center'>
+                                    <span>¿Ya tiene una cuenta? </span>
+                                    <Link to="/signup" style={{ textDecoration: 'underline', fontWeight: "bold", color: '#00BB9C' }}>
+                                        Inicia sesión aquí
+                                    </Link>
+                                </Text>
               </form>
 
             </Box>
