@@ -71,13 +71,13 @@ export const SignUp = () => {
           isClosable: true,
         })
       } else {
-        toast({
-          title: 'Cuenta Creada.',
-          description: "Tu cuenta ha sido creada exitosamente.",
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        })
+        // toast({
+        //   title: 'Cuenta Creada.',
+        //   description: "Tu cuenta ha sido creada exitosamente.",
+        //   status: 'success',
+        //   duration: 9000,
+        //   isClosable: true,
+        // })
         dispatch(registerEmailPassword(data.email, data.password, data.name, data.usrImg))
       }
     }

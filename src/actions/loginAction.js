@@ -2,6 +2,7 @@ import { getAuth, signInWithEmailAndPassword, signInWithPopup, signOut } from "@
 import { google, facebook, db } from "../firebase/firebase"
 import { types } from "../types/types"
 import { addDoc, collection, getDocs, query, where } from "@firebase/firestore";
+import Swal from 'sweetalert2'
 
 export const login = (id, displayName) => {
     return {
@@ -59,9 +60,10 @@ export const loginEmailPassword = (email, password) => {
                 dispatch(login(user.uid, user.displayName))
                 console.log('Bienvenido ' + user.displayName)
             })
-            .catch(err => {
-                console.log(err)
+            .catch(error => {
+                console.log(error)
                 console.log('El usuario no existe')
+                Swal.fire('Error',error.code == 'auth/user-not-found' ? 'There is no user record corresponding to this identifier. The user may have been deleted.': error.code == 'auth/wrong-password' ?'The password is invalid or the user does not have a  password.': '<strong>Invalid form!</strong><br> Please provide a value for the required fields in the form.' ,'error' )
             })
     }
 }
