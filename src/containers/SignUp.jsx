@@ -224,8 +224,8 @@ export const SignUp = () => {
                   Crear Cuenta
                 </Button>
                 <Text my='15px' align='center'>
-                                    <span>¿Ya tiene una cuenta? </span>
-                                    <Link to="/signup" style={{ textDecoration: 'underline', fontWeight: "bold", color: '#00BB9C' }}>
+                                    <span>¿Ya tienes una cuenta? </span>
+                                    <Link to="/login" style={{ textDecoration: 'underline', fontWeight: "bold", color: '#00BB9C' }}>
                                         Inicia sesión aquí
                                     </Link>
                                 </Text>
