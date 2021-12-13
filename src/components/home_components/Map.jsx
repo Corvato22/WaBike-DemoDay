@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const ContainerMap = styled.div`
      width:100%;
-     height:600px;
+     height: 100vh;
 `
 
 export const Map = () => {
