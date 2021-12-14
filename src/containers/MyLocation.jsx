@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
     Banner2,
     IconCelu
@@ -11,13 +11,8 @@ import {
     Button
 } from '@chakra-ui/react'
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
 
 const MyLocation = () => {
-
-    // const { newUser } = useSelector(store => store.register)
-
-    // console.log(newUser)
 
     // useEffect(() => {
     //     console.log(register)

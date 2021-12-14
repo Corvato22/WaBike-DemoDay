@@ -40,7 +40,6 @@ export const Settings = () => {
                                         <WrapItem fontWeight='bold' alignItems='center'>Nombre</WrapItem>
                                     </Wrap>
                                 </Link>
-
                             </Td>
                         </Tr>
                         <Tr>
@@ -50,30 +49,25 @@ export const Settings = () => {
                             <Td>Contáctenos</Td>
                         </Tr>
                     </Tbody>
-                </Table>
-
-                <Table my='30px' color='red' fontWeight='bold'>
-                    <Tbody >
-                        <Tr>
-                            <Td textAlign='center' cursor='pointer' onClick={() => {
-
-
-                                Swal.fire({
-                                    title: 'Are you sure?',
-                                    text: "You won't be able to revert this!",
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#3085d6',
-                                    cancelButtonColor: '#d33',
-                                    confirmButtonText: 'Yes, delete it!'
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        handleDeleteAccount(user);
-                                    }
-                                })
-                            }}>Eliminar Cuenta</Td>
-                        </Tr>
-                    </Tbody>
+                    <Box w='100%' display='flex' alignItems='center' justifyContent='center' my='30px'>
+                        <Box w='170px' textAlign='center' color='red' fontWeight='bold' cursor='pointer' onClick={() => {
+                            Swal.fire({
+                                title: '¿Estás seguro de que deseas eliminar tu cuenta?',
+                                text: 'No podrás deshacer este cambio',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#00bb9c',
+                                confirmButtonText: 'Sí, eliminar cuenta',
+                                cancelButtonText: 'Cancelar'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    handleDeleteAccount(user);
+                                }
+                            })
+                        }}>Eliminar Cuenta
+                        </Box>
+                    </Box>
                 </Table>
             </section>
 

@@ -13,7 +13,6 @@ export const login = (id, displayName) => {
     }
 }
 
-
 // let usrExistFirestore = false
 
 export const loginGoogle = () => {
@@ -46,6 +45,7 @@ export const loginFacebook = () => {
             .then(({ user }) => {
                 console.log(user);
                 dispatch(login(user.uid, user.displayName))  //* Manda en el dispatch login los parametros desestructurados del user
+                localStorage.setItem('userData', JSON.stringify({ email: user.email, uid: user.uid, name: user.displayName, usrImg: user.photoURL }))
             })
             .catch(err => {
                 console.log(err);
@@ -128,18 +128,18 @@ export const accountDeleteAsync = (user) => {
     return (dispatch) => {
         deleteUser(user)
             .then(() => {
-                //acá va swal fire
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
+                Swal.fire({
+                    title: 'Eliminada',
+                    text: 'Tu cuenta ha sido eliminada de nuestros registros',
+                    icon: 'success',
+                    confirmButtonColor: '#00bb9c',
+                    confirmButtonText: 'Entendido',
+                })
                 console.log('cuenta eliminada')
                 dispatch(accountDeleteSync())
                 localStorage.setItem('userData', '')
             })
             .catch((err) => {
-                //acá va swal fire
                 console.log('error:', err)
             })
     }

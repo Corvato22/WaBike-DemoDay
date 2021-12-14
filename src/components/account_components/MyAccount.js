@@ -39,7 +39,6 @@ export const MyAccount = () => {
                         <Tr>
                             <Td>Email</Td>
                             <Td>{newUser.email}</Td>
-
                         </Tr>
                     </Tbody>
 

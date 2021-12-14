@@ -27,12 +27,17 @@
     color: #00BB9C;
     animation: loading 10s linear;
 }
-.fa-user{
+
+.fa-user {
     color: lightgray;
 }
 
 
-.leaflet-container{
+.leaflet-container {
     width: 100%;
     height: 100vh;
+}
+
+.leaflet-routing-container leaflet-bar leaflet-routing-container-hide leaflet-control{
+    display: none;
 }
