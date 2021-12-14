@@ -2,8 +2,14 @@ import React from 'react'
 import { ChevronLeftIcon } from '@chakra-ui/icons'
 import { Heading, Spacer, Avatar, Wrap, WrapItem, Box, Flex, Table, Tbody, Tr, Td, TableCaption, } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export const MyAccount = () => {
+
+    const { newUser } = useSelector(store => store.register)
+
+    console.log(newUser)
+
     return (
         <>
             <Box bg='#00BB9C'>
@@ -28,16 +34,12 @@ export const MyAccount = () => {
                     <Tbody>
                         <Tr>
                             <Td>Nombre</Td>
-                            <Td>Jon Mircha</Td>
+                            <Td>{newUser.name}</Td>
                         </Tr>
                         <Tr>
                             <Td>Email</Td>
-                            <Td>mircha@gmail.com</Td>
+                            <Td>{newUser.email}</Td>
 
-                        </Tr>
-                        <Tr>
-                            <Td>Fecha de nacimiento</Td>
-                            <Td>05/4/2000</Td>
                         </Tr>
                     </Tbody>
 

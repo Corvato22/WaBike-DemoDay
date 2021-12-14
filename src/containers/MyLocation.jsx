@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     Banner2,
     IconCelu
@@ -11,8 +11,18 @@ import {
     Button
 } from '@chakra-ui/react'
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 const MyLocation = () => {
+
+    // const { newUser } = useSelector(store => store.register)
+
+    // console.log(newUser)
+
+    // useEffect(() => {
+    //     console.log(register)
+    // }, [])
+
     return (
         <>
             <Banner2>
@@ -26,7 +36,7 @@ const MyLocation = () => {
                     <br />
                     <Text fontSize='2xl' color='#262628'>Encuentra las mejores rutas para llegar a tu destino. ¡Seguro y rápido!</Text>
                     <br />
-                    <Text fontSize='2xl' color='#262628'>Déjanos saber tu úbicación para empezar</Text>
+                    <Text fontSize='2xl' color='#262628'>Déjanos saber tu ubicación para empezar</Text>
                     <br />
                     <Button
                         variant="outline"
