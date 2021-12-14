@@ -26,7 +26,7 @@ export const registerEmailPassword = (email, password, name, usrImg) => {
             .catch(error => {
                 console.log(error);
                 // eslint-disable-next-line
-                Swal.fire('Error',error.code == 'auth/email-already-in-use' && 'The email address is already in use by another account.', 'error' )
+                Swal.fire('Error', error.code == 'auth/email-already-in-use' && 'The email address is already in use by another account.', 'error')
             })
     }
 }

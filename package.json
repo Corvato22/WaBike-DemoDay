@@ -11,7 +11,9 @@
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "enzyme-to-json": "^3.6.2",
     "firebase": "^9.5.0",
+    "firebase-mock": "^2.3.2",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "geojson-path-finder": "^1.5.3",
@@ -25,6 +27,7 @@
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "redux": "^4.1.2",
+    "redux-mock-store": "^1.5.4",
     "redux-thunk": "^2.4.1",
     "styled-components": "^5.3.3",
     "sweetalert2": "^11.3.0",
@@ -46,5 +49,10 @@
     ">0.2%",
     "not dead",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6"
+  }
 }
