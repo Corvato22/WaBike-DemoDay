@@ -15,7 +15,7 @@
     "firebase": "^9.5.0",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
-    "geojson-path-finder": "^1.5.3",
+    "geojson-path-finder": "github:iowahc/geojson-path-finder",
     "leaflet": "^1.7.1",
     "leaflet-routing-machine": "^3.2.12",
     "react": "^17.0.2",
