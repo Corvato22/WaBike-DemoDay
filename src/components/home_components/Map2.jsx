@@ -15,9 +15,9 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
 // import { Button } from "@chakra-ui/react";
 import stations from "../../data/data";
 
-const maps = {
-  base: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-};
+// const maps = {
+//   base: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+// };
 
 const Map2 = () => {
 
@@ -123,8 +123,8 @@ const Map2 = () => {
             <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="Map">
             <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url={maps.base}
+              attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
+              url='https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu'
             />
           </LayersControl.BaseLayer>
           <LayersControl.Overlay checked name="Markers">
