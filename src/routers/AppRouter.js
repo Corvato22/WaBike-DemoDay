@@ -8,6 +8,7 @@ import { SignUp } from '../containers/SignUp'
 import { SplashScreen } from '../containers/SplashScreen'
 import { useDispatch } from 'react-redux'
 import { getAuth, onAuthStateChanged } from '@firebase/auth'
+import { Box, Spinner } from '@chakra-ui/react'
 // import { loginEmailPassword } from '../actions/loginAction'
 
 const AppRouter = () => {
@@ -36,10 +37,19 @@ const AppRouter = () => {
 
     if (checking) {
         return (
-            <h1>Espere...</h1>
+            <>
+                <Box display='flex' alignItems='center' justifyContent='center' w='100%' h='100vh' transform='scale(2)'>
+                    <Spinner
+                        thickness='4px'
+                        speed='1.5s'
+                        emptyColor='gray.200'
+                        color='#00BB9C'
+                        size='xl'
+                    />
+                </Box>
+            </>
         )
     }
-
 
     return (
         <>

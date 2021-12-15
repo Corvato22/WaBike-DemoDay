@@ -21,6 +21,7 @@ export const registerEmailPassword = (email, password, name, usrImg) => {
             .then(async ({ user }) => {
                 await updateProfile(auth.currentUser, { displayName: name, photoURL: usrImg })
                 dispatch(register(user.email, user.uid, user.displayName, user.photoURL))
+                localStorage.setItem('userData', JSON.stringify({ email: user.email, uid: user.uid, name: user.displayName, usrImg: user.photoURL }))
             })
 
             .catch(error => {

@@ -18,6 +18,9 @@ export const Settings = () => {
 
     }
 
+    let getUserData = localStorage.getItem('userData')
+    let userData = JSON.parse(getUserData)
+
     return (
         <>
             <Box bg='#00bb9c'>
@@ -35,9 +38,9 @@ export const Settings = () => {
                                 <Link to='/myaccount'>
                                     <Wrap>
                                         <WrapItem>
-                                            <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
+                                            <Avatar name={userData.name} src={userData.usrImg} />
                                         </WrapItem>
-                                        <WrapItem fontWeight='bold' alignItems='center'>Nombre</WrapItem>
+                                        <WrapItem fontWeight='bold' alignItems='center'>{userData.name}</WrapItem>
                                     </Wrap>
                                 </Link>
                             </Td>
@@ -49,26 +52,26 @@ export const Settings = () => {
                             <Td>Contáctenos</Td>
                         </Tr>
                     </Tbody>
-                    <Box w='100%' display='flex' alignItems='center' justifyContent='center' my='30px'>
-                        <Box w='170px' textAlign='center' color='red' fontWeight='bold' cursor='pointer' onClick={() => {
-                            Swal.fire({
-                                title: '¿Estás seguro de que deseas eliminar tu cuenta?',
-                                text: 'No podrás deshacer este cambio',
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#d33',
-                                cancelButtonColor: '#00bb9c',
-                                confirmButtonText: 'Sí, eliminar cuenta',
-                                cancelButtonText: 'Cancelar'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    handleDeleteAccount(user);
-                                }
-                            })
-                        }}>Eliminar Cuenta
-                        </Box>
-                    </Box>
                 </Table>
+                <Box w='100%' display='flex' alignItems='center' justifyContent='center' my='30px'>
+                    <Box w='170px' textAlign='center' color='red' fontWeight='bold' cursor='pointer' onClick={() => {
+                        Swal.fire({
+                            title: '¿Estás seguro de que deseas eliminar tu cuenta?',
+                            text: 'No podrás deshacer este cambio',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#00bb9c',
+                            confirmButtonText: 'Sí, eliminar cuenta',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                handleDeleteAccount(user);
+                            }
+                        })
+                    }}>Eliminar Cuenta
+                    </Box>
+                </Box>
             </section>
 
         </>

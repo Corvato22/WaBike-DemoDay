@@ -24,8 +24,7 @@ export const MenuBar = () => {
         dispatch(startLogout())
         navigate("/login")
     }
-    // const {name} = useSelector(state => state.auth)
-
+    
     const {
         isOpen: isOpenMenu,
         onOpen: onOpenMenu,
@@ -40,7 +39,8 @@ export const MenuBar = () => {
 
     const btnRef = React.useRef()
 
-
+    let getUserData = localStorage.getItem('userData')
+    let userData = JSON.parse(getUserData)
 
     return (
         <>
@@ -74,8 +74,8 @@ export const MenuBar = () => {
                         flexDir='column'
                         justifyContent='center'
                     >
-                        <Avatar size='xl' name='Jon Mircha' ml='6' src='https://bit.ly/kent-c-dodds' />
-                        <Text fontSize='xl' fontWeight='bold' color='white' mt='18px' ml='6'>Jon Mircha</Text>
+                        <Avatar size='xl' name={userData.name} ml='6' src={userData.usrImg} />
+                        <Text fontSize='xl' fontWeight='bold' color='white' mt='18px' ml='6'>{userData.name}</Text>
                     </Box>
 
                     <DrawerBody>
