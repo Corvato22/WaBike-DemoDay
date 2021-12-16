@@ -120,7 +120,7 @@ const Map2 = () => {
             />
           </LayersControl.BaseLayer>
         </LayersControl> */}
-            <LayersControl position="topright">
+        <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="Map">
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

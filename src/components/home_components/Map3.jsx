@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-    Map,
     TileLayer,
     Marker,
     Tooltip,
@@ -12,9 +11,12 @@ import axios from "axios";
 const PathFinder = require("geojson-path-finder");
 
 
-//36.710576, -4.450445
+export const CityMap = (props) => {
 
-function CityMap(props) {
+    //Coodrinate initialization
+    const [start, setStart] = useState([6.244520010584636, -75.58937196626917])
+    const [end, setEnd] = useState([6.260312966884926, -75.57740193426602])
+
     const [coords, setcoords] = useState({ lat: 36.710576, lng: -4.450445 });
     const [hasLocation, sethasLocation] = useState(false);
     const [markerCoords, setmarkerCoords] = useState({
@@ -22,11 +24,22 @@ function CityMap(props) {
         lng: 0.0
     });
 
+
+    //GET CURRENNT LOCATION JS LOCATION API
+    navigator.geolocation.getCurrentPosition(
+        function (position) {
+            
+            // setEnd([position.coords.longitude - 0.001701, position.coords.latitude - 0.000386])
+            setStart(start=> ([position.coords.longitude, position.coords.latitude]))
+            console.log('position obj from geoLocation', start)
+        }
+    )
+
     const [geojsonMark, setgeojsonMark] = useState(null);
 
     function findRouteThroughAGeoJson(origin, destiny, geojsonData) {
         let pathFinder = new PathFinder(geojsonData);
-
+        console.log('origin location', origin)
         let patth = pathFinder.findPath(
             {
                 type: "GeoProperty",
@@ -52,28 +65,23 @@ function CityMap(props) {
     };
 
     useEffect(() => {
-        axios
-            .get(
-                "https://raw.githubusercontent.com/dashgrn/wabike-GeoJson/main/Ciclorutas.geojson"
-            )
+        axios.get("https://raw.githubusercontent.com/dashgrn/wabike-GeoJson/main/Ciclorutas.geojson")
             .then((response) => {
                 console.log("response", response);
                 let filteredGeoJSON = response.data;
                 filteredGeoJSON.features = response.data.features.filter(filteredJSON);
                 filteredGeoJSON.totalFeatures = filteredGeoJSON.features.length;
-                console.log("puntos totales", filteredGeoJSON.totalFeatures);
-                console.log("filtered geocoso", filteredGeoJSON);
+                console.log("puntos totales en geoJSON", filteredGeoJSON.totalFeatures);
+                console.log("geoJSON filtrado", filteredGeoJSON);
 
                 let path = findRouteThroughAGeoJson(
                     filteredGeoJSON.features[1].geometry.coordinates[0],
-                    filteredGeoJSON.features[9].geometry.coordinates[0],
+                    filteredGeoJSON.features[30].geometry.coordinates[0],
                     filteredGeoJSON
                 );
-                console.log(
-                    "path 69",
-                    filteredGeoJSON.features[1].geometry.coordinates[0]
-                );
+                
                 setgeojsonMark(path);
+                console.log("path vector",geojsonMark);
             });
     }, []);
 
@@ -103,11 +111,11 @@ function CityMap(props) {
         ) : null;
 
     return (
-        <MapContainer center={[6.256, -75.59]} zoom={12} onClick={handleClick}>
+        <MapContainer center={[6.256, -75.59]} zoom={15} onClick={handleClick}>
             <TileLayer
                 attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
                 url='https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu'
-                // url="https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png"
+            // url="https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png"
             />
             {marker}
             {geojson}
@@ -121,5 +129,3 @@ function CityMap(props) {
     //     {this.state.isMapInit && <Routing map={this.map} />}
     // </Map>
 }
-
-export default CityMap;
