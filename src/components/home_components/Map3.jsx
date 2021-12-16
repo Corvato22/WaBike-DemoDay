@@ -12,8 +12,6 @@ import axios from "axios";
 const PathFinder = require("geojson-path-finder");
 
 
-//36.710576, -4.450445
-
 function CityMap(props) {
     const [coords, setcoords] = useState({ lat: 36.710576, lng: -4.450445 });
     const [hasLocation, sethasLocation] = useState(false);
@@ -65,7 +63,7 @@ function CityMap(props) {
                 console.log("filtered geocoso", filteredGeoJSON);
 
                 let path = findRouteThroughAGeoJson(
-                    filteredGeoJSON.features[1].geometry.coordinates[0],
+                    filteredGeoJSON.features[65].geometry.coordinates[0],
                     filteredGeoJSON.features[9].geometry.coordinates[0],
                     filteredGeoJSON
                 );
@@ -78,6 +76,7 @@ function CityMap(props) {
     }, []);
 
     const handleClick = (ev) => {
+        console.log('Funciona')
         sethasLocation(true);
         setmarkerCoords({ lat: ev.latlng.lat, lng: ev.latlng.lng });
     };
@@ -113,8 +112,6 @@ function CityMap(props) {
             {geojson}
         </MapContainer>
     );
-
-
 
     // <Map center={[33.5024, 36.2988]} zoom={14} ref={this.saveMap}>
     //     <TileLayer url="https://api.maptiler.com/maps/ch-swisstopo-lbm-dark/256/{z}/{x}/{y}.png?key=gR2UbhjBpXWL68Dc4a3f" />

@@ -8,6 +8,7 @@ import {
   Popup
 } from "react-leaflet";
 
+
 import L from "leaflet";
 // Import the routing machine JS and CSS:
 import 'leaflet-routing-machine'
@@ -19,7 +20,16 @@ import stations from "../../data/data";
 //   base: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 // };
 
+
 const Map2 = () => {
+  //Custom markers
+  const markerIcon = new L.Icon({
+    iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637700/WaBike/EnCicla_ct5b8v.svg',
+    iconSize: [40, 40],
+    iconAnchor: [17, 46], //[left/right, top/bottom]
+    popupAnchor: [0, -46], //[left/right, top/bottom]
+
+  })
 
   // The map instance:
   const [map, setMap] = useState(null);
@@ -120,7 +130,7 @@ const Map2 = () => {
             />
           </LayersControl.BaseLayer>
         </LayersControl> */}
-            <LayersControl position="topright">
+        <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="Map">
             <TileLayer
               attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
@@ -129,8 +139,8 @@ const Map2 = () => {
           </LayersControl.BaseLayer>
           <LayersControl.Overlay checked name="Markers">
             <LayerGroup>
-              {stations.map(station => (
-                <Marker position={[station.lat, station.lng]}>
+              {stations.map((station, i) => (
+                <Marker key={i} position={[station.lat, station.lng]} icon={markerIcon}>
                   <Popup>{station.station}</Popup>
                 </Marker>
               ))}
