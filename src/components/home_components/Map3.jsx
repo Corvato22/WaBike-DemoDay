@@ -63,8 +63,8 @@ function CityMap(props) {
                 console.log("filtered geocoso", filteredGeoJSON);
 
                 let path = findRouteThroughAGeoJson(
-                    filteredGeoJSON.features[65].geometry.coordinates[0],
-                    filteredGeoJSON.features[9].geometry.coordinates[0],
+                    filteredGeoJSON.features[4].geometry.coordinates[0],
+                    filteredGeoJSON.features[20].geometry.coordinates[0],
                     filteredGeoJSON
                 );
                 console.log(
