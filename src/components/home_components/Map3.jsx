@@ -120,8 +120,13 @@ export const CityMap = (props) => {
                 }
             }
         );
-        // console.log('path 44', path)
-        return patth.path;
+        console.log('path 44', patth)
+        if ( patth ) {
+            return patth.path;
+        } else {
+            console.log('path not found')
+        }
+        
     }
 
     //FILTERING FUNCTION -- PASED AS CALLBACK TO FILTER METHOD.
@@ -179,7 +184,8 @@ export const CityMap = (props) => {
         geojsonMark !== null ? (
             <Polyline
                 weight={4}
-                positions={geojsonMark.map((value) => [value[1], value[0]])}
+                
+                positions={ geojsonMark? (geojsonMark.map((value) => [value[1], value[0]])) : []}
                 color={"#00BB9C"}
             />
         ) : null;
