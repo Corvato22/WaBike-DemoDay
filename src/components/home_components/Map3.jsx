@@ -10,21 +10,19 @@ import {
     useMapEvents,
     Popup
 } from "react-leaflet";
-import axios from "axios";
+
 import network from "../../data/network.json"
 
 const PathFinder = require("geojson-path-finder");
 
-let geoJSONNetwork = undefined
-let dataNetwork = []
 
 export const CityMap = (props) => {
 
-    const [currentPosition, setCurrentPosition] = useState(null)
+    const [currentPosition, setCurrentPosition] = useState([-75.58779741288164, 6.241221838754799])
 
     //GENERATE MARKER FROM ACTUAL LOCATION
     function LocationMarker() {
-        
+
         const map = useMapEvents({
             click() {
                 map.locate()
@@ -32,7 +30,7 @@ export const CityMap = (props) => {
             locationfound(e) {
                 setCurrentPosition(e.latlng)
                 map.flyTo(e.latlng, map.getZoom())
-                console.log('current latlong: ',e.latlng)
+                console.log('current latlong: ', e.latlng)
             },
         })
 
@@ -51,23 +49,19 @@ export const CityMap = (props) => {
     const [markerDragged, setMarkerDragged] = useState(false)
     const eventHandlers = useMemo(
         () => ({
-          dragend() {
-            const marker = destinationPositionRef.current;
-            if (marker != null) {
-              console.log(marker.getLatLng());
-              const { lat, lng } = marker.getLatLng();
-              setX(x =>lng);
-              setY(y =>lat);
-              setMarkerDragged(true);
+            dragend() {
+                const marker = destinationPositionRef.current;
+                if (marker != null) {
+                    console.log(marker.getLatLng());
+                    const { lat, lng } = marker.getLatLng();
+                    setX(x => lng);
+                    setY(y => lat);
+                    setMarkerDragged(true);
+                }
             }
-          }
         }),
         []
-      );
-    // const center = {
-    //     lat: 6.272494278000583,
-    //     lng: -75.56239915620594,
-    // }
+    );
     function DestinationMarker() {
         // const [destinationPosition, setDestinationPosition] = useState(center)
         // const markerRef = useRef(null)
@@ -80,7 +74,7 @@ export const CityMap = (props) => {
                 ref={destinationPositionRef}
                 position={[y, x]}
                 eventHandlers={eventHandlers}
-                >
+            >
                 <Popup>Destino</Popup>
             </Marker>
         )
@@ -93,15 +87,15 @@ export const CityMap = (props) => {
 
     const [coords, setcoords] = useState({ lat: 36.710576, lng: -4.450445 });
     const [hasLocation, sethasLocation] = useState(false);
-    const [markerCoords, setmarkerCoords] = useState({lat: 0.0,lng: 0.0});
+    const [markerCoords, setmarkerCoords] = useState({ lat: 0.0, lng: 0.0 });
 
 
 
     const [geojsonMark, setgeojsonMark] = useState(null);
 
-    
+
     function findRouteThroughAGeoJson(origin, destiny, geojsonData) {
-        let pathFinder = new PathFinder(geojsonData, {precision: 0.002});
+        let pathFinder = new PathFinder(geojsonData, { precision: 0.001 });
         console.log('origin location as ARGS', origin)
         console.log('origin destination as ARGS', destiny)
         let patth = pathFinder.findPath(
@@ -121,71 +115,36 @@ export const CityMap = (props) => {
             }
         );
         console.log('path 44', patth)
-        if ( patth ) {
+        if (patth) {
             return patth.path;
         } else {
             console.log('path not found')
         }
-        
     }
 
-    //FILTERING FUNCTION -- PASED AS CALLBACK TO FILTER METHOD.
-    const filteredJSON = (feature) => {
-        return feature.geometry.type === "LineString";
-    };
 
     //GETTING GEOJSON DATA WITH AXIOS GET FROM GITHUB and then GENERATING THE ROUTE 
     useEffect(() => {
-        // axios.get("https://raw.githubusercontent.com/dashgrn/wabike-GeoJson/main/Ciclorutas.geojson")
-        //     .then((response) => {
-        //         console.log("response", response);
-        //         let filteredGeoJSON = response.data;
-        //         filteredGeoJSON.features = response.data.features.filter(filteredJSON);
-        //         filteredGeoJSON.totalFeatures = filteredGeoJSON.features.length;
-        //         console.log("puntos totales en geoJSON", filteredGeoJSON.totalFeatures);
-        //         console.log("geoJSON filtrado", filteredGeoJSON);
+        let path = findRouteThroughAGeoJson(
+            [currentPosition.lng, currentPosition.lat],
 
-        //         geoJSONNetwork = filteredGeoJSON
-        //     });
-            let path = findRouteThroughAGeoJson(
-                [-75.59022903442383, 6.260355905076092],
-                // filteredGeoJSON.features[1].geometry.coordinates[0],
-                // filteredGeoJSON.features[30].geometry.coordinates[0],
-                // [-75.59022903442383, 6.260355905076092],
-                [x,y],
-                network
-            );
-
-            setgeojsonMark(geojsonMark => path);
-            // console.log("path vector", geojsonMark);
-    }, [x,y]);
-
-    // const handleClick = (evt) => {
-    //     console.log('click evt', evt)
-    //     sethasLocation(true);
-    //     setmarkerCoords({ lat: evt.latlng.lat, lng: evt.latlng.lng });
-    // };
-
-    // const marker = hasLocation ? (
-    //     <Marker position={markerCoords}>
-    //         <Tooltip>
-    //             Latitude: {markerCoords.lat}
-    //             <br />
-    //             Longitude: {markerCoords.lng} <br />
-    //             Marker
-    //         </Tooltip>
-    //     </Marker>
-    // ) : null;
+            [x, y],
+            network
+        );
+        console.log('currentPosition Obj: ', currentPosition)
+        setgeojsonMark(geojsonMark => path);
+        // console.log("path vector", geojsonMark);
+    }, [x, y]);
 
 
     //PATH FROM PATH FINDER
-   
+
     const geoJsonPath =
         geojsonMark !== null ? (
             <Polyline
                 weight={4}
-                
-                positions={ geojsonMark? (geojsonMark.map((value) => [value[1], value[0]])) : []}
+
+                positions={geojsonMark ? (geojsonMark.map((value) => [value[1], value[0]])) : []}
                 color={"#00BB9C"}
             />
         ) : null;
@@ -196,7 +155,7 @@ export const CityMap = (props) => {
                 attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
                 url='https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu'
             />
-            {/* {marker} */}
+
             {geoJsonPath}
             <GeoJSON
                 data={network}
