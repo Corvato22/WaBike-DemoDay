@@ -5,7 +5,10 @@ import {
   LayersControl,
   LayerGroup,
   Marker,
-  Popup
+  Popup,
+  Polygon,
+  Circle,
+  CircleMarker
 } from "react-leaflet";
 
 
@@ -15,6 +18,8 @@ import 'leaflet-routing-machine'
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
 // import { Button } from "@chakra-ui/react";
 import stations from "../../data/data";
+import zones from "../../data/data_dangerZones";
+import circles from "../../data/data_dangerZones_2";
 
 // const maps = {
 //   base: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -106,6 +111,27 @@ const Map2 = () => {
     // }
   }
 
+  // const polygon = [
+  //   [6.247590950562071, -75.57856554947973],
+  //   [6.246103282820813, -75.57903904787744],
+  //   [6.244886730350713, -75.57508547058184],
+  //   [6.246395051953209, -75.57468391897791],
+  //   [6.246911058068498, -75.57499289308605],
+  //   [6.248119342990826, -75.57496812134588],
+  //   [6.248137179524584, -75.57543076112856],
+  //   [6.247223700120601, -75.57544309469864],
+  //   [6.246898760762242, -75.57562813855728],
+  //   [6.246757377565775, -75.57594349114231],
+  //   [6.247590950562071, -75.57856554947973]
+  // ]
+
+  console.log(zones)
+  console.log(circles)
+
+  const redOptions = { color: 'red' }
+  const purpleOptions = { color: 'purple' }
+  const greenOptions = { color: 'green' }
+
   return (
     <>
       {/* <Button size='md'
@@ -144,6 +170,17 @@ const Map2 = () => {
                   <Popup>{station.station}</Popup>
                 </Marker>
               ))}
+
+              {/* {zones.map((zones, i) => (
+                <Polygon key={i} pathOptions={redOptions} positions={zones.polygon} />
+              ))} */}
+
+              {circles.map((area, i) => (
+                <Circle key={i} center={[area.lat, area.lng]} pathOptions={purpleOptions} radius={150} />
+              ))}
+
+              {/* <Circle key={i} center={[area.lat, area.lng]} pathOptions={purpleOptions} radius={200} /> */}
+
             </LayerGroup>
           </LayersControl.Overlay>
         </LayersControl>
