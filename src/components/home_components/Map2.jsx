@@ -16,7 +16,7 @@ import L from "leaflet";
 import 'leaflet-routing-machine'
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
 // import { Button } from "@chakra-ui/react";
-import stations from "../../data/data";
+import stations from "../../data/enCicla";
 import BaseLayer from "./BaseLayer";
 import {SearchOrigin} from './SearchOrigin.jsx'
 import {SearchDestiny} from './SearchDestiny.jsx'
@@ -156,8 +156,8 @@ const Map2 = () => {
           <LayersControl.Overlay checked name="Markers">
             <LayerGroup>
               {stations.map((station, i) => (
-                <Marker key={i} position={[station.lat, station.lng]} icon={markerIcon}>
-                  <Popup>{station.station}</Popup>
+                <Marker key={i} position={[station.lat, station.lon]} icon={markerIcon}>
+                  <Popup>{station.name}</Popup>
                 </Marker>
               ))}
             </LayerGroup>

@@ -14,7 +14,7 @@ import {
 import { useDispatch } from 'react-redux'
 import { startLogout } from '../../actions/loginAction'
 import { Link, useNavigate } from 'react-router-dom'
-import stations from "../../data/data";
+import stations from "../../data/enCicla";
 
 
 export const MenuBar = () => {
@@ -138,7 +138,7 @@ export const MenuBar = () => {
                                 <Box key={i} display='flex' flexDir='column'>
                                     <Box display='flex' alignItems='center' my='10px'>
                                         <Image boxSize='40px' mr='5px' src='https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637827/WaBike/EnCicla_Shadow_qn7zdy.svg' alt='Icon_Graph' />
-                                        <Text w='350px' fontSize='17' color='#242E42' fontWeight='regular' cursor='pointer' _active={{ transform: 'scale(0.98)' }}>{station.station}</Text>
+                                        <Text w='350px' fontSize='17' color='#242E42' fontWeight='regular' cursor='pointer' _active={{ transform: 'scale(0.98)' }}>{station.name}</Text>
                                     </Box>
                                     <Divider />
                                 </Box>

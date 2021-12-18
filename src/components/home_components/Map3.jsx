@@ -9,7 +9,8 @@ import {
     LayersControl,
     LayerGroup,
     useMapEvents,
-    Popup
+    Popup,
+    Circle
 } from "react-leaflet";
 import {
     Box,
@@ -24,7 +25,10 @@ import {
 import L from "leaflet";
 import network from "../../data/network.json"
 import BaseLayer from "./BaseLayer";
-import stations from "../../data/data";
+import stations from "../../data/enCicla";
+import circles from '../../data/dangerZones'
+
+
 const PathFinder = require("geojson-path-finder");
 
 
@@ -154,7 +158,7 @@ export const CityMap = (props) => {
         console.log('currentPosition Obj: ', currentPosition)
         setgeojsonMark(geojsonMark => path);
         // console.log("path vector", geojsonMark);
-    }, [x, y]);
+    }, [x, y,currentPosition]);
 
 
     //PATH FROM PATH FINDER
@@ -187,8 +191,11 @@ export const CityMap = (props) => {
                 <DestinationMarker />
                 <LayersControl.Overlay checked name="Markers">
                     <LayerGroup>
+                    {circles.map((area, i) => (
+                <Circle key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
+              ))}
                         {stations.map((station, i) => (
-                            <Marker key={i} position={[station.lat, station.lng]} icon={markerIcon}>
+                            <Marker key={i} position={[station.lat, station.lon]} icon={markerIcon}>
                                 <Popup>
                                     {/* {station.station} */}
 
@@ -209,9 +216,8 @@ export const CityMap = (props) => {
                                                 mb={6}
                                                 pos={'relative'}>
                                                 <Image
-                                                    src={
-                                                        'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-                                                    }
+                                                    src={station.picture}
+                                                    alt={station.nameZona}  
                                                     layout={'fill'}
                                                 />
                                             </Box>
@@ -222,19 +228,16 @@ export const CityMap = (props) => {
                                                     fontWeight={800}
                                                     fontSize={'sm'}
                                                     letterSpacing={1.1}>
-                                                    Blog
+                                                    {station.name}
                                                 </Text>
                                                 <Heading
                                                     color={'gray.700'}
                                                     fontSize={'2xl'}
                                                     fontFamily={'body'}>
-                                                    Boost your conversion rate
+                                                    {station.address}
                                                 </Heading>
                                                 <Text color={'gray.500'}>
-                                                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                                                    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-                                                    erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                                                    et ea rebum.
+                                                    {station.description}
                                                 </Text>
                                             </Stack>
 
