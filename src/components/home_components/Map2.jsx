@@ -125,9 +125,6 @@ const Map2 = () => {
   //   [6.247590950562071, -75.57856554947973]
   // ]
 
-  console.log(zones)
-  console.log(circles)
-
   const redOptions = { color: 'red' }
   const purpleOptions = { color: 'purple' }
   const greenOptions = { color: 'green' }
@@ -176,7 +173,7 @@ const Map2 = () => {
               ))} */}
 
               {circles.map((area, i) => (
-                <Circle key={i} center={[area.lat, area.lng]} pathOptions={purpleOptions} radius={150} />
+                <Circle key={i} center={[area.lat, area.lng]} pathOptions={redOptions} radius={150} />
               ))}
 
               {/* <Circle key={i} center={[area.lat, area.lng]} pathOptions={purpleOptions} radius={200} /> */}
