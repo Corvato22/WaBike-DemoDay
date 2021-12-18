@@ -5,8 +5,12 @@ import {
   LayersControl,
   LayerGroup,
   Marker,
-  Popup
+  Popup,
+  Polygon,
+  Circle,
+  CircleMarker
 } from "react-leaflet";
+
 
 import L from "leaflet";
 // Import the routing machine JS and CSS:
@@ -14,12 +18,23 @@ import 'leaflet-routing-machine'
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
 // import { Button } from "@chakra-ui/react";
 import stations from "../../data/data";
+import zones from "../../data/data_dangerZones";
+import circles from "../../data/data_dangerZones_2";
 
-const maps = {
-  base: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-};
+// const maps = {
+//   base: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+// };
+
 
 const Map2 = () => {
+  //Custom markers
+  const markerIcon = new L.Icon({
+    iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637700/WaBike/EnCicla_ct5b8v.svg',
+    iconSize: [40, 40],
+    iconAnchor: [17, 46], //[left/right, top/bottom]
+    popupAnchor: [0, -46], //[left/right, top/bottom]
+
+  })
 
   // The map instance:
   const [map, setMap] = useState(null);
@@ -96,6 +111,27 @@ const Map2 = () => {
     // }
   }
 
+  // const polygon = [
+  //   [6.247590950562071, -75.57856554947973],
+  //   [6.246103282820813, -75.57903904787744],
+  //   [6.244886730350713, -75.57508547058184],
+  //   [6.246395051953209, -75.57468391897791],
+  //   [6.246911058068498, -75.57499289308605],
+  //   [6.248119342990826, -75.57496812134588],
+  //   [6.248137179524584, -75.57543076112856],
+  //   [6.247223700120601, -75.57544309469864],
+  //   [6.246898760762242, -75.57562813855728],
+  //   [6.246757377565775, -75.57594349114231],
+  //   [6.247590950562071, -75.57856554947973]
+  // ]
+
+  console.log(zones)
+  console.log(circles)
+
+  const redOptions = { color: 'red' }
+  const purpleOptions = { color: 'purple' }
+  const greenOptions = { color: 'green' }
+
   return (
     <>
       {/* <Button size='md'
@@ -123,17 +159,28 @@ const Map2 = () => {
         <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="Map">
             <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url={maps.base}
+              attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
+              url='https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu'
             />
           </LayersControl.BaseLayer>
           <LayersControl.Overlay checked name="Markers">
             <LayerGroup>
-              {stations.map(station => (
-                <Marker position={[station.lat, station.lng]}>
+              {stations.map((station, i) => (
+                <Marker key={i} position={[station.lat, station.lng]} icon={markerIcon}>
                   <Popup>{station.station}</Popup>
                 </Marker>
               ))}
+
+              {/* {zones.map((zones, i) => (
+                <Polygon key={i} pathOptions={redOptions} positions={zones.polygon} />
+              ))} */}
+
+              {circles.map((area, i) => (
+                <Circle key={i} center={[area.lat, area.lng]} pathOptions={purpleOptions} radius={150} />
+              ))}
+
+              {/* <Circle key={i} center={[area.lat, area.lng]} pathOptions={purpleOptions} radius={200} /> */}
+
             </LayerGroup>
           </LayersControl.Overlay>
         </LayersControl>

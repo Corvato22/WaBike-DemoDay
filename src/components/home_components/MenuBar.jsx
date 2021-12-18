@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDisclosure } from '@chakra-ui/hooks'
-import { Button, Box, Flex, Spacer, Avatar, Text } from '@chakra-ui/react'
+import { Button, Box, Flex, Spacer, Avatar, Text, Image, Divider } from '@chakra-ui/react'
 import { ExternalLinkIcon, HamburgerIcon, RepeatClockIcon, SearchIcon, SettingsIcon, TriangleUpIcon, WarningTwoIcon } from '@chakra-ui/icons'
 import {
     Drawer,
@@ -14,6 +14,8 @@ import {
 import { useDispatch } from 'react-redux'
 import { startLogout } from '../../actions/loginAction'
 import { Link, useNavigate } from 'react-router-dom'
+import stations from "../../data/data";
+
 
 export const MenuBar = () => {
 
@@ -24,7 +26,7 @@ export const MenuBar = () => {
         dispatch(startLogout())
         navigate("/login")
     }
-    
+
     const {
         isOpen: isOpenMenu,
         onOpen: onOpenMenu,
@@ -84,14 +86,14 @@ export const MenuBar = () => {
                                 <TriangleUpIcon w={6} h={6} mr='3' />
                                 <Text fontSize='xl'>Inicio</Text>
                             </Flex>
-                            <Flex as={Link} to="/history" w='100%' my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
+                            {/* <Flex as={Link} to="/history" w='100%' my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
                                 <RepeatClockIcon w={6} h={6} mr='3' />
                                 <Text fontSize='xl'>Historial</Text>
-                            </Flex>
-                            <Flex my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
+                            </Flex> */}
+                            {/* <Flex my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
                                 <WarningTwoIcon w={6} h={6} mr='3' />
                                 <Text fontSize='xl'>Reportar Robo</Text>
-                            </Flex>
+                            </Flex> */}
                             <Flex as={Link} to="/settings" w='100%' my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
                                 <SettingsIcon w={6} h={6} mr='3' />
                                 <Text fontSize='xl'>Configuraciones</Text>
@@ -111,16 +113,38 @@ export const MenuBar = () => {
                 finalFocusRef={btnRef}
             >
                 <DrawerOverlay />
-                <DrawerContent bg='#EFEFEF' borderTopRadius="3xl">
+                <DrawerContent bg='#EFEFEF' h='60vh' borderTopRadius="3xl">
                     {/* <DrawerCloseButton color='white' /> */}
-                    <Box bg='#FFFFFF' w='100%' h='175px' p={4} display='flex' alignItems='center' borderTopRadius="3xl">
-                        Aquí va todo lo de las rutas
+                    <Box bg='#FFFFFF' w='100%' p={5} display='flex' alignItems='center' borderTopRadius="3xl" mb='30px'>
+                        <Box mr='15px'>
+                            <Image src='https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639626507/WaBike/Current_destiny_fxjebw.svg' alt='Icon_Graph' />
+                        </Box>
+                        <Box>
+                            <Box mb='25px'>
+                                <Text fontSize='13' color='#C8C7CC' fontWeight='regular'>DIRECCIÓN DE PARTIDA</Text>
+                                <Text fontSize='17' color='#242E42' fontWeight='regular'>Mi ubicación actual</Text>
+                            </Box>
+
+                            <Box mt='25px'>
+                                <Text fontSize='13' color='#C8C7CC' fontWeight='regular'>DESTINO</Text>
+                                <Text fontSize='17' color='#242E42' fontWeight='regular'>EnCicla - Suramericana</Text>
+                            </Box>
+                        </Box>
                     </Box>
 
-                    <DrawerBody>
-                        <Box w='100%' p={4}>
+                    <Box bg='#FFFFFF' w='100%' h='100%' px='10px' display='flex' alignItems='center'>
+                        <Box w='100%' h='100%' overflowY='scroll'>
+                            {stations.map((station, i) => (
+                                <Box key={i} display='flex' flexDir='column'>
+                                    <Box display='flex' alignItems='center' my='10px'>
+                                        <Image boxSize='40px' mr='5px' src='https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637827/WaBike/EnCicla_Shadow_qn7zdy.svg' alt='Icon_Graph' />
+                                        <Text w='350px' fontSize='17' color='#242E42' fontWeight='regular' cursor='pointer' _active={{ transform: 'scale(0.98)' }}>{station.station}</Text>
+                                    </Box>
+                                    <Divider />
+                                </Box>
+                            ))}
                         </Box>
-                    </DrawerBody>
+                    </Box>
                 </DrawerContent>
             </Drawer>
         </>

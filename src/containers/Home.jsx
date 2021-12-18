@@ -7,7 +7,7 @@ export const Home = () => {
     return (
         <>
             <MenuBar />
-            <CityMap />
+            <MapComponent />
         </>
     )
 }
