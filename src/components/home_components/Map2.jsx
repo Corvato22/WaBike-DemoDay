@@ -125,10 +125,6 @@ const Map2 = () => {
   //   [6.247590950562071, -75.57856554947973]
   // ]
 
-  const redOptions = { color: 'red' }
-  const purpleOptions = { color: 'purple' }
-  const greenOptions = { color: 'green' }
-
   return (
     <>
       {/* <Button size='md'
@@ -173,7 +169,7 @@ const Map2 = () => {
               ))} */}
 
               {circles.map((area, i) => (
-                <Circle key={i} center={[area.lat, area.lng]} pathOptions={redOptions} radius={150} />
+                <Circle key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
               ))}
 
               {/* <Circle key={i} center={[area.lat, area.lng]} pathOptions={purpleOptions} radius={200} /> */}
