@@ -1,14 +1,9 @@
-export const getDestiny = () =>{
-    if(keyword) {
-        // request to nominatim api
-        fetch(`https://nominatim.openstreetmap.org/search?q=${keyword}&format=json`)
-          .then((response) => {
-            return response.json()
-          }).then(json => {
-           // get response data from nominatim
-           console.log("json", json)
-            if(json.length > 0) return renderResults(json)
-            else alert("Location not found")
-        })
-      }
+export const getDestiny = async(keyword) =>{
+
+      const url = `https://nominatim.openstreetmap.org/search?q=${keyword}&format=json`
+      const res = await fetch(url);
+      const data = await res.json();
+
+  
+  return data
 }

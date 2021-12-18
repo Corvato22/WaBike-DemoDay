@@ -43,3 +43,13 @@
 /* .leaflet-control-container {
     display: none;
 } */
+.listLoc{
+    cursor:pointer;
+}
+.listLoc:hover{
+    background-color: lightgrey;
+}
+.off{
+    display: none;
+ 
+}

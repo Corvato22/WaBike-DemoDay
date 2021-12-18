@@ -131,8 +131,8 @@ const Map2 = () => {
         borderColor='green.500'
         onClick={handleClick}>Change Waypoints</Button> */}
 
-      <SearchOrigin />
-      <SearchDestiny />
+      <SearchOrigin setStart={setStart}/>
+      <SearchDestiny setEnd={setEnd}/>
       <MapContainer
         center={[6.256, -75.590]}
         zoom={12}

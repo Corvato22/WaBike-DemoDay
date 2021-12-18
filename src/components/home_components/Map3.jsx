@@ -41,6 +41,20 @@ export const CityMap = (props) => {
         popupAnchor: [0, -46], //[left/right, top/bottom]
 
     })
+    const markerOrigin = new L.Icon({
+        iconUrl: 'https://i.imgur.com/L6bGfzH.png',
+        iconSize: [40, 40],
+        iconAnchor: [17, 46], //[left/right, top/bottom]
+        popupAnchor: [0, -46], //[left/right, top/bottom]
+
+    })
+    const markerDestiny = new L.Icon({
+        iconUrl: 'https://i.imgur.com/5Oy4iZa.png',
+        iconSize: [40, 40],
+        iconAnchor: [17, 46], //[left/right, top/bottom]
+        popupAnchor: [0, -46], //[left/right, top/bottom]
+
+    })
 
     const [currentPosition, setCurrentPosition] = useState([-75.58779741288164, 6.241221838754799])
 
@@ -59,7 +73,7 @@ export const CityMap = (props) => {
         })
 
         return currentPosition === null ? null : (
-            <Marker position={currentPosition}>
+            <Marker position={currentPosition} icon={markerOrigin}>
                 <Popup>You are here</Popup>
             </Marker>
         )
@@ -98,6 +112,7 @@ export const CityMap = (props) => {
                 ref={destinationPositionRef}
                 position={[y, x]}
                 eventHandlers={eventHandlers}
+                icon={markerDestiny}
             >
                 <Popup>Destino</Popup>
             </Marker>
@@ -158,7 +173,7 @@ export const CityMap = (props) => {
         console.log('currentPosition Obj: ', currentPosition)
         setgeojsonMark(geojsonMark => path);
         // console.log("path vector", geojsonMark);
-    }, [x, y,currentPosition]);
+    }, [x, y, currentPosition]);
 
 
     //PATH FROM PATH FINDER
@@ -177,6 +192,8 @@ export const CityMap = (props) => {
         <MapContainer center={[6.256, -75.59]} zoom={15} >
             <LayersControl position="topright">
                 <BaseLayer />
+                <LayersControl.Overlay checked name="network">
+                    <LayerGroup>
                 <TileLayer
                     attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
                     url='https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu'
@@ -187,13 +204,21 @@ export const CityMap = (props) => {
                     data={network}
                     color={"#9fc6e0e2"}
                 />
+                </LayerGroup>
+                </LayersControl.Overlay>
                 <LocationMarker />
                 <DestinationMarker />
+                
+                <LayersControl.Overlay checked name="Circles">
+                    <LayerGroup>
+                        {circles.map((area, i) => (
+                            <Circle key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
+                        ))}
+                    </LayerGroup>
+                </LayersControl.Overlay>
                 <LayersControl.Overlay checked name="Markers">
                     <LayerGroup>
-                    {circles.map((area, i) => (
-                <Circle key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
-              ))}
+
                         {stations.map((station, i) => (
                             <Marker key={i} position={[station.lat, station.lon]} icon={markerIcon}>
                                 <Popup>
@@ -217,7 +242,7 @@ export const CityMap = (props) => {
                                                 pos={'relative'}>
                                                 <Image
                                                     src={station.picture}
-                                                    alt={station.nameZona}  
+                                                    alt={station.nameZona}
                                                     layout={'fill'}
                                                 />
                                             </Box>
