@@ -23,14 +23,19 @@ export const SearchDestiny = ({setEnd}) => {
     const { searchText } = values
     // console.log(searchText)
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     getDestiny(searchText)
+    //     .then((location) =>{
+    //         setDestiny(location)
+    //     })
+    // }, [searchText])
+
+    const handleSearch = (e) => {
+        e.preventDefault();
         getDestiny(searchText)
         .then((location) =>{
             setDestiny(location)
         })
-    }, [searchText])
-    const handleSearch = (e) => {
-        e.preventDefault();
         console.log(searchText)
         console.log(destiny)
         setToggleSwitch('on') 
@@ -66,8 +71,8 @@ export const SearchDestiny = ({setEnd}) => {
                         <Table variant='simple' className={toggleSwitch}>
 
                             <Tbody>
-                                <Tr>
-                                    <Td className='listLoc' onClick={()=>handleClick(loc.lat,loc.lon)}>{loc.display_name}</Td>
+                                <Tr key={loc.place_id}>
+                                    <Td  className='listLoc' onClick={()=>handleClick(loc.lat,loc.lon)}>{loc.display_name}</Td>
                                 </Tr>
                             </Tbody>
                         </Table>

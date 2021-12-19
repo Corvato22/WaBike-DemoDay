@@ -19,6 +19,7 @@ import {
     Text,
     Stack,
     Image,
+    useToast,
 
 
 } from '@chakra-ui/react';
@@ -27,11 +28,12 @@ import network from "../../data/network.json"
 import BaseLayer from "./BaseLayer";
 import stations from "../../data/enCicla";
 import circles from '../../data/dangerZones'
-import {SearchDestiny2} from './SearchDestiny2.jsx'
-
+import { SearchDestiny2 } from './SearchDestiny2.jsx'
 
 const PathFinder = require("geojson-path-finder");
 
+
+let id = 'test-toast'
 
 export const CityMap = (props) => {
     
@@ -46,6 +48,15 @@ export const CityMap = (props) => {
     console.log(staId)
     console.log(station)
     console.log(station.lat, station.lon)
+
+    const toast = useToast()
+
+    let staId = Number(localStorage.getItem('sta'))
+    const staSelected = (staId) => {
+        return stations.find(sta=> sta.id == staId)
+    }
+    let station = staSelected(staId)
+
 
     const markerIcon = new L.Icon({
         iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637700/WaBike/EnCicla_ct5b8v.svg',
@@ -133,16 +144,6 @@ export const CityMap = (props) => {
     }
 
 
-    //Coodrinate initialization
-    const [start, setStart] = useState([])
-    const [end, setEnd] = useState([6.260312966884926, -75.57740193426602])
-
-    const [coords, setcoords] = useState({ lat: 36.710576, lng: -4.450445 });
-    const [hasLocation, sethasLocation] = useState(false);
-    const [markerCoords, setmarkerCoords] = useState({ lat: 0.0, lng: 0.0 });
-
-
-
     const [geojsonMark, setgeojsonMark] = useState(null);
 
 
@@ -171,6 +172,16 @@ export const CityMap = (props) => {
             return patth.path;
         } else {
             console.log('path not found')
+            if (!toast.isActive(id)) {
+                toast({
+                    id,
+                    title: 'Ups!',
+                    description: "No pudimos encontrar un ruta exacta, intenta con una posición cercana",
+                    status: 'info',
+                    duration: 1500,
+                    isClosable: true,
+                })
+            }
         }
     }
 
@@ -190,6 +201,12 @@ export const CityMap = (props) => {
                 setY(station.lat)
             }
         // console.log("path vector", geojsonMark);
+
+            //setting destiny marker location 
+        // if(station){
+        //     setX(station.lon)
+        //     setY(station.lat)
+        // }
     }, [x, y, currentPosition]);
 
 
@@ -207,93 +224,91 @@ export const CityMap = (props) => {
 
     return (
         <>
-        <SearchDestiny2 setX={setX} setY={setY}/>
-        <MapContainer center={[6.256, -75.59]} zoom={15} >
-            <LayersControl position="topright">
-                <BaseLayer />
-                <LayersControl.Overlay checked name="network">
-                    <LayerGroup>
-                <TileLayer
-                    attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
-                    url='https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu'
-                />
+            <SearchDestiny2 setX={setX} setY={setY} />
+            <MapContainer center={[6.256, -75.59]} zoom={15} >
+                <LayersControl position="topright">
+                    <BaseLayer />
+                    <LayersControl.Overlay checked name="Ciclorutas">
+                        <LayerGroup>
+                            {geoJsonPath}
+                            <GeoJSON
+                                data={network}
+                                color={"#9fc6e0e2"}
+                            />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+                    <LocationMarker />
+                    <DestinationMarker />
 
-                {geoJsonPath}
-                <GeoJSON
-                    data={network}
-                    color={"#9fc6e0e2"}
-                />
-                </LayerGroup>
-                </LayersControl.Overlay>
-                <LocationMarker />
-                <DestinationMarker />
-                
-                <LayersControl.Overlay checked name="Circles">
-                    <LayerGroup>
-                        {circles.map((area, i) => (
-                            <Circle key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
-                        ))}
-                    </LayerGroup>
-                </LayersControl.Overlay>
-                <LayersControl.Overlay checked name="Markers">
-                    <LayerGroup>
+                    <LayersControl.Overlay checked name="Zonas de Alta Accidentalidad">
+                        <LayerGroup>
+                            {circles.map((area, i) => (
+                                <Circle opacity={0.1} key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
+                            ))}
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+                    <LayersControl.Overlay checked name="Estaciones EnCicla">
+                        <LayerGroup>
 
-                        {stations.map((station, i) => (
-                            <Marker key={i} position={[station.lat, station.lon]} icon={markerIcon}>
-                                <Popup>
-                                    {/* {station.station} */}
-
-                                    <Center py={6}>
-                                        <Box
-                                            maxW={'445px'}
-                                            w={'full'}
-                                            bg={'white'}
-                                            boxShadow={'2xl'}
-                                            rounded={'md'}
-                                            p={6}
-                                            overflow={'hidden'}>
+                            {stations.map((station, i) => (
+                                <Marker opacity={0.6} key={i} position={[station.lat, station.lon]} icon={markerIcon}>
+                                    <Popup>
+                                        <Center py={3}>
                                             <Box
-                                                h={'210px'}
-                                                bg={'gray.100'}
-                                                mt={-6}
-                                                mx={-6}
-                                                mb={6}
-                                                pos={'relative'}>
-                                                <Image
-                                                    src={station.picture}
-                                                    alt={station.nameZona}
-                                                    layout={'fill'}
-                                                />
-                                            </Box>
-                                            <Stack>
-                                                <Text
-                                                    color={'green.500'}
-                                                    textTransform={'uppercase'}
-                                                    fontWeight={800}
-                                                    fontSize={'sm'}
-                                                    letterSpacing={1.1}>
-                                                    {station.name}
-                                                </Text>
-                                                <Heading
-                                                    color={'gray.700'}
-                                                    fontSize={'2xl'}
-                                                    fontFamily={'body'}>
-                                                    {station.address}
-                                                </Heading>
-                                                <Text color={'gray.500'}>
-                                                    {station.description}
-                                                </Text>
-                                            </Stack>
+                                                maxW={'250px'}
+                                                w='250px'
+                                                rounded={'md'}
+                                            >{
 
-                                        </Box>
-                                    </Center>
-                                </Popup>
-                            </Marker>
-                        ))}
-                    </LayerGroup>
-                </LayersControl.Overlay>
-            </LayersControl>
-        </MapContainer>
+                                                    station.picture === "0" ?
+                                                        <Image
+                                                            src={'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639886877/WaBike/Enclicla_no_disponible_s0rq6p.png'}
+                                                            alt={station.nameZona}
+                                                            rounded={'md'}
+                                                            objectFit='cover'
+                                                        /> :
+                                                        <Image
+                                                            src={station.picture}
+                                                            alt={station.nameZona}
+                                                            rounded={'md'}
+                                                            objectFit='cover'
+                                                        />
+                                                }
+                                                <Box>
+                                                    <Text
+                                                        color='#00BB9C'
+                                                        textTransform={'uppercase'}
+                                                        fontSize={'16px'}
+                                                        fontWeight={800}>
+                                                        {station.name}
+                                                    </Text>
+                                                    <Text
+                                                        color={'#242E42'}
+                                                        textTransform={'uppercase'}
+                                                        fontSize={'11px'}>
+                                                        {station.address}
+                                                    </Text>
+
+                                                    {
+                                                        station.description === "0" ?
+                                                            <Text color={'gray.500'}>
+                                                                {'Indicación no disponible'}
+                                                            </Text>
+                                                            :
+                                                            <Text color={'gray.500'}>
+                                                                {station.description}
+                                                            </Text>
+                                                    }
+                                                </Box>
+                                            </Box>
+                                        </Center>
+                                    </Popup>
+                                </Marker>
+                            ))}
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+                </LayersControl>
+            </MapContainer>
         </>
     );
 }
