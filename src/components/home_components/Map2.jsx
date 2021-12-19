@@ -10,6 +10,7 @@ import {
   Circle,
   CircleMarker
 } from "react-leaflet";
+import circles from '../../data/dangerZones'
 
 
 

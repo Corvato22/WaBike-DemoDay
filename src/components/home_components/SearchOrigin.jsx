@@ -63,7 +63,7 @@ export const SearchOrigin = ({setStart}) => {
                         <Table variant='simple' className={toggleSwitch}>
 
                             <Tbody>
-                                <Tr>
+                                <Tr key={loc.place_id}>
                                     <Td className='listLoc' onClick={()=>handleClick(loc.lat,loc.lon)}>{loc.display_name}</Td>
                                 </Tr>
                             </Tbody>

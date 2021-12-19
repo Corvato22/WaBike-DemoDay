@@ -65,8 +65,8 @@ export const SearchDestiny = ({setEnd}) => {
                         <Table variant='simple' className={toggleSwitch}>
 
                             <Tbody>
-                                <Tr>
-                                    <Td className='listLoc' onClick={()=>handleClick(loc.lat,loc.lon)}>{loc.display_name}</Td>
+                                <Tr key={loc.place_id}>
+                                    <Td  className='listLoc' onClick={()=>handleClick(loc.lat,loc.lon)}>{loc.display_name}</Td>
                                 </Tr>
                             </Tbody>
                         </Table>

@@ -12,11 +12,11 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from '../../hooks/useForm'
 import { getDestiny } from '../../helpers/getDestiny'
 
-export const SearchDestiny2 = ({setX, setY}) => {
+export const SearchDestiny2 = ({ setX, setY }) => {
 
     const [destiny, setDestiny] = useState([])
     const [toggleSwitch, setToggleSwitch] = useState('on')
-    const [values, handleInputChange] = useForm({
+    const [values, handleInputChange, reset] = useForm({
         searchText: '',
     })
 
@@ -25,27 +25,26 @@ export const SearchDestiny2 = ({setX, setY}) => {
 
     useEffect(() => {
         getDestiny(searchText)
-        .then((location) =>{
-            setDestiny(location)
-        })
+            .then((location) => {
+                setDestiny(location)
+            })
     }, [searchText])
+
     const handleSearch = (e) => {
         e.preventDefault();
         console.log(searchText)
         console.log(destiny)
-       
-    }
-    const handleClick = (lat, lon) =>{
-      console.log(lat, lon)
-      setX(lon)
-      setY(lat)
-   
 
-      setToggleSwitch('off') 
-    //   reset()
-        
     }
-   
+    const handleClick = (lat, lon) => {
+        console.log(lat, lon)
+        setX(lon)
+        setY(lat)
+        setToggleSwitch('off')
+        reset()
+
+    }
+
 
     return (
         <>
@@ -61,16 +60,16 @@ export const SearchDestiny2 = ({setX, setY}) => {
                         onChange={handleInputChange}
                     />
                     {
-                        destiny.map((loc, idx) =>(
-                        <Table variant='simple' className={toggleSwitch}>
+                        destiny.map((loc, idx) => (
+                            <Table key={loc.place_id} variant='simple' className={toggleSwitch}>
 
-                            <Tbody>
-                                <Tr>
-                                    <Td className='listLoc' onClick={()=>handleClick(loc.lat,loc.lon)}>{loc.display_name}</Td>
-                                </Tr>
-                            </Tbody>
-                        </Table>
-                    ))
+                                <Tbody>
+                                    <Tr>
+                                        <Td className='listLoc' onClick={() => handleClick(loc.lat, loc.lon)}>{loc.display_name}</Td>
+                                    </Tr>
+                                </Tbody>
+                            </Table>
+                        ))
                     }
 
                 </form>
