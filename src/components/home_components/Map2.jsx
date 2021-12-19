@@ -12,21 +12,29 @@ import {
 } from "react-leaflet";
 
 
+
+
 import L from "leaflet";
 // Import the routing machine JS and CSS:
 import 'leaflet-routing-machine'
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
 // import { Button } from "@chakra-ui/react";
-import stations from "../../data/data";
-import zones from "../../data/data_dangerZones";
-import circles from "../../data/data_dangerZones_2";
-
+import stations from "../../data/enCicla";
+import BaseLayer from "./BaseLayer";
+import {SearchOrigin} from './SearchOrigin.jsx'
+import {SearchDestiny} from './SearchDestiny.jsx'
 // const maps = {
 //   base: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 // };
 
 
 const Map2 = () => {
+
+  
+
+
+  // const geocoder = L.Control.Geocoder.nominatim({})
+
   //Custom markers
   const markerIcon = new L.Icon({
     iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637700/WaBike/EnCicla_ct5b8v.svg',
@@ -60,6 +68,7 @@ const Map2 = () => {
     if (map) {
       RoutingMachineRef.current = L.Routing.control({
         position: 'topleft',
+        
         lineOptions: {
           styles: [
             {
@@ -67,9 +76,11 @@ const Map2 = () => {
             },
           ],
         },
+        // geocoder: geocoder,
         waypoints: [start, end],
       })
       setRoutingMachine(RoutingMachineRef.current)
+      
     }
     // eslint-disable-next-line
   }, [map])
@@ -83,6 +94,9 @@ const Map2 = () => {
     console.log(start, typeof (start))
     console.log(end, typeof (end))
     // eslint-disable-next-line
+
+
+    
   }, [routingMachine, start, end])
 
   // Update start and end points on button click:
@@ -133,6 +147,9 @@ const Map2 = () => {
         border='2px'
         borderColor='green.500'
         onClick={handleClick}>Change Waypoints</Button> */}
+
+      <SearchOrigin setStart={setStart}/>
+      <SearchDestiny setEnd={setEnd}/>
       <MapContainer
         center={[6.256, -75.590]}
         zoom={12}
@@ -141,6 +158,7 @@ const Map2 = () => {
         // Set the map instance to state when ready:
         whenCreated={map => setMap(map)}
       >
+        
         {/* <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="Map">
             <TileLayer
@@ -150,17 +168,13 @@ const Map2 = () => {
           </LayersControl.BaseLayer>
         </LayersControl> */}
         <LayersControl position="topright">
-          <LayersControl.BaseLayer checked name="Map">
-            <TileLayer
-              attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
-              url='https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu'
-            />
-          </LayersControl.BaseLayer>
+        <BaseLayer />
+          
           <LayersControl.Overlay checked name="Markers">
             <LayerGroup>
               {stations.map((station, i) => (
-                <Marker key={i} position={[station.lat, station.lng]} icon={markerIcon}>
-                  <Popup>{station.station}</Popup>
+                <Marker key={i} position={[station.lat, station.lon]} icon={markerIcon}>
+                  <Popup>{station.name}</Popup>
                 </Marker>
               ))}
 

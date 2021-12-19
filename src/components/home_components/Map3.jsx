@@ -6,18 +6,55 @@ import {
     GeoJSON,
     Polyline,
     MapContainer,
+    LayersControl,
     LayerGroup,
     useMapEvents,
-    Popup
+    Popup,
+    Circle
 } from "react-leaflet";
+import {
+    Box,
+    Center,
+    Heading,
+    Text,
+    Stack,
+    Image,
 
+
+} from '@chakra-ui/react';
+import L from "leaflet";
 import network from "../../data/network.json"
+import BaseLayer from "./BaseLayer";
+import stations from "../../data/enCicla";
+import circles from '../../data/dangerZones'
+import {SearchDestiny2} from './SearchDestiny2.jsx'
 
 const PathFinder = require("geojson-path-finder");
 
 
 export const CityMap = (props) => {
+    const markerIcon = new L.Icon({
+        iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637700/WaBike/EnCicla_ct5b8v.svg',
+        iconSize: [40, 40],
+        iconAnchor: [17, 46], //[left/right, top/bottom]
+        popupAnchor: [0, -46], //[left/right, top/bottom]
 
+    })
+    const markerOrigin = new L.Icon({
+        iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639625137/WaBike/Current_location_sct7u6.svg',
+        iconSize: [40, 40],
+        iconAnchor: [17, 46], //[left/right, top/bottom]
+        popupAnchor: [0, -46], //[left/right, top/bottom]
+
+    })
+    const markerDestiny = new L.Icon({
+        iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639625137/WaBike/Destiny_location_f6nmay.svg',
+        iconSize: [40, 40],
+        iconAnchor: [17, 46], //[left/right, top/bottom]
+        popupAnchor: [0, -46], //[left/right, top/bottom]
+
+    })
+    
     const [currentPosition, setCurrentPosition] = useState([-75.58779741288164, 6.241221838754799])
 
     //GENERATE MARKER FROM ACTUAL LOCATION
@@ -35,7 +72,7 @@ export const CityMap = (props) => {
         })
 
         return currentPosition === null ? null : (
-            <Marker position={currentPosition}>
+            <Marker position={currentPosition} icon={markerOrigin}>
                 <Popup>You are here</Popup>
             </Marker>
         )
@@ -74,6 +111,7 @@ export const CityMap = (props) => {
                 ref={destinationPositionRef}
                 position={[y, x]}
                 eventHandlers={eventHandlers}
+                icon={markerDestiny}
             >
                 <Popup>Destino</Popup>
             </Marker>
@@ -134,10 +172,10 @@ export const CityMap = (props) => {
         console.log('currentPosition Obj: ', currentPosition)
         setgeojsonMark(geojsonMark => path);
         // console.log("path vector", geojsonMark);
-    }, [x, y]);
+    }, [x, y, currentPosition]);
 
 
-    //PATH FROM PATH FINDER
+     //PATH FROM PATH FINDER
 
     const geoJsonPath =
         geojsonMark !== null ? (
@@ -150,19 +188,94 @@ export const CityMap = (props) => {
         ) : null;
 
     return (
+        <>
+        <SearchDestiny2 setX={setX} setY={setY}/>
         <MapContainer center={[6.256, -75.59]} zoom={15} >
-            <TileLayer
-                attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
-                url='https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu'
-            />
+            <LayersControl position="topright">
+                <BaseLayer />
+                <LayersControl.Overlay checked name="network">
+                    <LayerGroup>
+                <TileLayer
+                    attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
+                    url='https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu'
+                />
 
-            {geoJsonPath}
-            <GeoJSON
-                data={network}
-                color={"#9fc6e0e2"}
-            />
-            <LocationMarker />
-            <DestinationMarker />
+                {geoJsonPath}
+                <GeoJSON
+                    data={network}
+                    color={"#9fc6e0e2"}
+                />
+                </LayerGroup>
+                </LayersControl.Overlay>
+                <LocationMarker />
+                <DestinationMarker />
+                
+                <LayersControl.Overlay checked name="Circles">
+                    <LayerGroup>
+                        {circles.map((area, i) => (
+                            <Circle key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
+                        ))}
+                    </LayerGroup>
+                </LayersControl.Overlay>
+                <LayersControl.Overlay checked name="Markers">
+                    <LayerGroup>
+
+                        {stations.map((station, i) => (
+                            <Marker key={i} position={[station.lat, station.lon]} icon={markerIcon}>
+                                <Popup>
+                                    {/* {station.station} */}
+
+                                    <Center py={6}>
+                                        <Box
+                                            maxW={'445px'}
+                                            w={'full'}
+                                            bg={'white'}
+                                            boxShadow={'2xl'}
+                                            rounded={'md'}
+                                            p={6}
+                                            overflow={'hidden'}>
+                                            <Box
+                                                h={'210px'}
+                                                bg={'gray.100'}
+                                                mt={-6}
+                                                mx={-6}
+                                                mb={6}
+                                                pos={'relative'}>
+                                                <Image
+                                                    src={station.picture}
+                                                    alt={station.nameZona}
+                                                    layout={'fill'}
+                                                />
+                                            </Box>
+                                            <Stack>
+                                                <Text
+                                                    color={'green.500'}
+                                                    textTransform={'uppercase'}
+                                                    fontWeight={800}
+                                                    fontSize={'sm'}
+                                                    letterSpacing={1.1}>
+                                                    {station.name}
+                                                </Text>
+                                                <Heading
+                                                    color={'gray.700'}
+                                                    fontSize={'2xl'}
+                                                    fontFamily={'body'}>
+                                                    {station.address}
+                                                </Heading>
+                                                <Text color={'gray.500'}>
+                                                    {station.description}
+                                                </Text>
+                                            </Stack>
+
+                                        </Box>
+                                    </Center>
+                                </Popup>
+                            </Marker>
+                        ))}
+                    </LayerGroup>
+                </LayersControl.Overlay>
+            </LayersControl>
         </MapContainer>
+        </>
     );
 }
