@@ -27,6 +27,7 @@ import network from "../../data/network.json"
 import BaseLayer from "./BaseLayer";
 import stations from "../../data/enCicla";
 import circles from '../../data/dangerZones'
+import {SearchDestiny2} from './SearchDestiny2.jsx'
 
 
 const PathFinder = require("geojson-path-finder");
@@ -42,14 +43,14 @@ export const CityMap = (props) => {
 
     })
     const markerOrigin = new L.Icon({
-        iconUrl: 'https://i.imgur.com/L6bGfzH.png',
+        iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639625137/WaBike/Current_location_sct7u6.svg',
         iconSize: [40, 40],
         iconAnchor: [17, 46], //[left/right, top/bottom]
         popupAnchor: [0, -46], //[left/right, top/bottom]
 
     })
     const markerDestiny = new L.Icon({
-        iconUrl: 'https://i.imgur.com/5Oy4iZa.png',
+        iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639625137/WaBike/Destiny_location_f6nmay.svg',
         iconSize: [40, 40],
         iconAnchor: [17, 46], //[left/right, top/bottom]
         popupAnchor: [0, -46], //[left/right, top/bottom]
@@ -189,6 +190,8 @@ export const CityMap = (props) => {
         ) : null;
 
     return (
+        <>
+        <SearchDestiny2 setX={setX} setY={setY}/>
         <MapContainer center={[6.256, -75.59]} zoom={15} >
             <LayersControl position="topright">
                 <BaseLayer />
@@ -275,5 +278,6 @@ export const CityMap = (props) => {
                 </LayersControl.Overlay>
             </LayersControl>
         </MapContainer>
+        </>
     );
 }
