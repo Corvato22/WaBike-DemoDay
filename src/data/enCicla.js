@@ -1190,7 +1190,7 @@ const stations = [
         "capacity": 40,
         "bikes": 9,
         "places": "0",
-        "picture": "https://www.encicla.gov.co/wp-content/uploads/orquideas.jpg",
+        "picture": "0",
         "bikes_State": "0",
         "places_State": "0",
         "closed": "0",
