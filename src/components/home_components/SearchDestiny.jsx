@@ -23,14 +23,19 @@ export const SearchDestiny = ({setEnd}) => {
     const { searchText } = values
     // console.log(searchText)
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     getDestiny(searchText)
+    //     .then((location) =>{
+    //         setDestiny(location)
+    //     })
+    // }, [searchText])
+
+    const handleSearch = (e) => {
+        e.preventDefault();
         getDestiny(searchText)
         .then((location) =>{
             setDestiny(location)
         })
-    }, [searchText])
-    const handleSearch = (e) => {
-        e.preventDefault();
         console.log(searchText)
         console.log(destiny)
        

@@ -19,6 +19,7 @@ import {
     Text,
     Stack,
     Image,
+    useToast,
 
 
 } from '@chakra-ui/react';
@@ -32,7 +33,19 @@ import { SearchDestiny2 } from './SearchDestiny2.jsx'
 const PathFinder = require("geojson-path-finder");
 
 
+let id = 'test-toast'
+
 export const CityMap = (props) => {
+
+    const toast = useToast()
+
+    let staId = Number(localStorage.getItem('sta'))
+    const staSelected = (staId) => {
+        return stations.find(sta=> sta.id == staId)
+    }
+    let station = staSelected(staId)
+
+
     const markerIcon = new L.Icon({
         iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637700/WaBike/EnCicla_ct5b8v.svg',
         iconSize: [40, 40],
@@ -119,16 +132,6 @@ export const CityMap = (props) => {
     }
 
 
-    //Coodrinate initialization
-    const [start, setStart] = useState([])
-    const [end, setEnd] = useState([6.260312966884926, -75.57740193426602])
-
-    const [coords, setcoords] = useState({ lat: 36.710576, lng: -4.450445 });
-    const [hasLocation, sethasLocation] = useState(false);
-    const [markerCoords, setmarkerCoords] = useState({ lat: 0.0, lng: 0.0 });
-
-
-
     const [geojsonMark, setgeojsonMark] = useState(null);
 
 
@@ -157,6 +160,16 @@ export const CityMap = (props) => {
             return patth.path;
         } else {
             console.log('path not found')
+            if (!toast.isActive(id)) {
+                toast({
+                    id,
+                    title: 'Ups!',
+                    description: "No pudimos encontrar un ruta exacta, intenta con una posición cercana",
+                    status: 'info',
+                    duration: 1500,
+                    isClosable: true,
+                })
+            }
         }
     }
 
@@ -172,6 +185,12 @@ export const CityMap = (props) => {
         console.log('currentPosition Obj: ', currentPosition)
         setgeojsonMark(geojsonMark => path);
         // console.log("path vector", geojsonMark);
+
+            //setting destiny marker location 
+        // if(station){
+        //     setX(station.lon)
+        //     setY(station.lat)
+        // }
     }, [x, y, currentPosition]);
 
 
@@ -193,13 +212,8 @@ export const CityMap = (props) => {
             <MapContainer center={[6.256, -75.59]} zoom={15} >
                 <LayersControl position="topright">
                     <BaseLayer />
-                    <LayersControl.Overlay checked name="network">
+                    <LayersControl.Overlay checked name="Ciclorutas">
                         <LayerGroup>
-                            <TileLayer
-                                attribution='\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e \u003ca href=\"https://www.maptiler.com/copyright/ \"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright \"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e'
-                                url='https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu'
-                            />
-
                             {geoJsonPath}
                             <GeoJSON
                                 data={network}
@@ -210,18 +224,18 @@ export const CityMap = (props) => {
                     <LocationMarker />
                     <DestinationMarker />
 
-                    <LayersControl.Overlay checked name="Circles">
+                    <LayersControl.Overlay checked name="Zonas de Alta Accidentalidad">
                         <LayerGroup>
                             {circles.map((area, i) => (
-                                <Circle key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
+                                <Circle opacity={0.1} key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
                             ))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked name="Markers">
+                    <LayersControl.Overlay checked name="Estaciones EnCicla">
                         <LayerGroup>
 
                             {stations.map((station, i) => (
-                                <Marker key={i} position={[station.lat, station.lon]} icon={markerIcon}>
+                                <Marker opacity={0.6} key={i} position={[station.lat, station.lon]} icon={markerIcon}>
                                     <Popup>
                                         <Center py={3}>
                                             <Box

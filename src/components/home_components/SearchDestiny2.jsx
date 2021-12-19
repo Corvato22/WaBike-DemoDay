@@ -23,26 +23,34 @@ export const SearchDestiny2 = ({ setX, setY }) => {
     const { searchText } = values
     // console.log(searchText)
 
-    useEffect(() => {
-        getDestiny(searchText)
-            .then((location) => {
-                setDestiny(location)
-            })
-    }, [searchText])
+    // useEffect(() => {
+    //     getDestiny(searchText)
+    //         .then((location) => {
+    //             setDestiny(location)
+    //         })
+    // }, [searchText])
 
     const handleSearch = (e) => {
         e.preventDefault();
-        console.log(searchText)
-        console.log(destiny)
-
+        console.log('search query:',searchText)
+        console.log('destiny search results',destiny)
+        getDestiny(searchText)
+            .then((location) => {
+                setDestiny(destiny => location)
+            })
+            .catch((error) => {
+                console.log('destination not found: ' + error)
+            })
+        reset()
+        setToggleSwitch('on')
     }
+
     const handleClick = (lat, lon) => {
         console.log(lat, lon)
         setX(lon)
         setY(lat)
         setToggleSwitch('off')
         reset()
-
     }
 
 
