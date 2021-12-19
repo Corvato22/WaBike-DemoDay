@@ -34,6 +34,7 @@ export const SearchOrigin = ({setStart}) => {
         e.preventDefault();
         console.log(searchText)
         console.log(origin)
+        setToggleSwitch('on')
         
     }
     const handleClick = (lat, lon) =>{

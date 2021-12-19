@@ -33,6 +33,7 @@ export const SearchDestiny = ({setEnd}) => {
         e.preventDefault();
         console.log(searchText)
         console.log(destiny)
+        setToggleSwitch('on') 
        
     }
     const handleClick = (lat, lon) =>{

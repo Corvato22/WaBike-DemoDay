@@ -34,6 +34,18 @@ const PathFinder = require("geojson-path-finder");
 
 
 export const CityMap = (props) => {
+    
+
+    let staId = Number(localStorage.getItem('sta'))
+    
+    const staSelected = (staId) => {
+        return stations.find(sta=> sta.id == staId)
+    }
+
+    let station = staSelected(staId)
+    console.log(staId)
+    console.log(station)
+    console.log(station.lat, station.lon)
 
     const markerIcon = new L.Icon({
         iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637700/WaBike/EnCicla_ct5b8v.svg',
@@ -173,6 +185,10 @@ export const CityMap = (props) => {
         );
         console.log('currentPosition Obj: ', currentPosition)
         setgeojsonMark(geojsonMark => path);
+            if(station){
+                setX(station.lon)
+                setY(station.lat)
+            }
         // console.log("path vector", geojsonMark);
     }, [x, y, currentPosition]);
 
