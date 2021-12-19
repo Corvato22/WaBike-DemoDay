@@ -29,12 +29,10 @@ import stations from "../../data/enCicla";
 import circles from '../../data/dangerZones'
 import {SearchDestiny2} from './SearchDestiny2.jsx'
 
-
 const PathFinder = require("geojson-path-finder");
 
 
 export const CityMap = (props) => {
-
     const markerIcon = new L.Icon({
         iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637700/WaBike/EnCicla_ct5b8v.svg',
         iconSize: [40, 40],
@@ -56,7 +54,7 @@ export const CityMap = (props) => {
         popupAnchor: [0, -46], //[left/right, top/bottom]
 
     })
-
+    
     const [currentPosition, setCurrentPosition] = useState([-75.58779741288164, 6.241221838754799])
 
     //GENERATE MARKER FROM ACTUAL LOCATION
@@ -177,7 +175,7 @@ export const CityMap = (props) => {
     }, [x, y, currentPosition]);
 
 
-    //PATH FROM PATH FINDER
+     //PATH FROM PATH FINDER
 
     const geoJsonPath =
         geojsonMark !== null ? (

@@ -5,7 +5,10 @@ import {
   LayersControl,
   LayerGroup,
   Marker,
-  Popup
+  Popup,
+  Polygon,
+  Circle,
+  CircleMarker
 } from "react-leaflet";
 
 
@@ -122,6 +125,20 @@ const Map2 = () => {
     // }
   }
 
+  // const polygon = [
+  //   [6.247590950562071, -75.57856554947973],
+  //   [6.246103282820813, -75.57903904787744],
+  //   [6.244886730350713, -75.57508547058184],
+  //   [6.246395051953209, -75.57468391897791],
+  //   [6.246911058068498, -75.57499289308605],
+  //   [6.248119342990826, -75.57496812134588],
+  //   [6.248137179524584, -75.57543076112856],
+  //   [6.247223700120601, -75.57544309469864],
+  //   [6.246898760762242, -75.57562813855728],
+  //   [6.246757377565775, -75.57594349114231],
+  //   [6.247590950562071, -75.57856554947973]
+  // ]
+
   return (
     <>
       {/* <Button size='md'
@@ -160,6 +177,17 @@ const Map2 = () => {
                   <Popup>{station.name}</Popup>
                 </Marker>
               ))}
+
+              {/* {zones.map((zones, i) => (
+                <Polygon key={i} pathOptions={redOptions} positions={zones.polygon} />
+              ))} */}
+
+              {circles.map((area, i) => (
+                <Circle key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
+              ))}
+
+              {/* <Circle key={i} center={[area.lat, area.lng]} pathOptions={purpleOptions} radius={200} /> */}
+
             </LayerGroup>
           </LayersControl.Overlay>
         </LayersControl>
