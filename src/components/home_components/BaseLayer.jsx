@@ -14,7 +14,7 @@ const BaseLayer = () => {
 
   return (
     <>
-      <LayersControl.BaseLayer  name="Light">
+      <LayersControl.BaseLayer  name="Información">
         <TileLayer
           url={maps.light}
         />
@@ -28,7 +28,7 @@ const BaseLayer = () => {
         />
       </LayersControl.BaseLayer>
 
-      <LayersControl.BaseLayer checked name="Pastel">
+      <LayersControl.BaseLayer checked name="WaBike">
         <TileLayer
           url={maps.pastel}
         />
