@@ -47,15 +47,11 @@ export const CityMap = (props) => {
     let station = staSelected(staId)
     console.log(staId)
     console.log(station)
-    console.log(station.lat, station.lon)
+    
 
     const toast = useToast()
 
-    let staId = Number(localStorage.getItem('sta'))
-    const staSelected = (staId) => {
-        return stations.find(sta=> sta.id == staId)
-    }
-    let station = staSelected(staId)
+
 
 
     const markerIcon = new L.Icon({
