@@ -36,18 +36,18 @@ const PathFinder = require("geojson-path-finder");
 let id = 'test-toast'
 
 export const CityMap = (props) => {
-    
+
 
     let staId = Number(localStorage.getItem('sta'))
-    
+
     const staSelected = (staId) => {
-        return stations.find(sta=> sta.id == staId)
+        return stations.find(sta => sta.id == staId)
     }
 
     let station = staSelected(staId)
     console.log(staId)
     console.log(station)
-    
+
 
     const toast = useToast()
 
@@ -168,7 +168,7 @@ export const CityMap = (props) => {
             return patth.path;
         } else {
             console.log('path not found')
-            if (!toast.isActive(id)) {
+            if (!patth) {
                 toast({
                     id,
                     title: 'Ups!',
@@ -185,20 +185,22 @@ export const CityMap = (props) => {
     //GETTING GEOJSON DATA WITH AXIOS GET FROM GITHUB and then GENERATING THE ROUTE 
     useEffect(() => {
         let path = findRouteThroughAGeoJson(
-            [currentPosition.lng, currentPosition.lat],
+            // [currentPosition.lng, currentPosition.lat],
+            [-75.6091868877411, 6.25872970393618],
 
             [x, y],
             network
         );
         console.log('currentPosition Obj: ', currentPosition)
         setgeojsonMark(geojsonMark => path);
-            if(station){
-                setX(station.lon)
-                setY(station.lat)
-            }
+        // if(station){
+        //     setX(station.lon)
+        //     setY(station.lat)
+        // }
+
         // console.log("path vector", geojsonMark);
 
-            //setting destiny marker location 
+        //setting destiny marker location 
         // if(station){
         //     setX(station.lon)
         //     setY(station.lat)
