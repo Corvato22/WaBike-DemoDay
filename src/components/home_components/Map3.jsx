@@ -236,14 +236,14 @@ export const CityMap = (props) => {
                     <LocationMarker />
                     <DestinationMarker />
 
-                    <LayersControl.Overlay checked name="Zonas de Alta Accidentalidad">
+                    <LayersControl.Overlay name="Zonas de Alta Accidentalidad">
                         <LayerGroup>
                             {circles.map((area, i) => (
                                 <Circle opacity={0.1} key={i} center={[area.lat, area.lng]} pathOptions={{ color: 'red' }} radius={150} />
                             ))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked name="Estaciones EnCicla">
+                    <LayersControl.Overlay name="Estaciones EnCicla">
                         <LayerGroup>
 
                             {stations.map((station, i) => (
