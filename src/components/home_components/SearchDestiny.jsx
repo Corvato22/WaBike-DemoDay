@@ -8,7 +8,7 @@ import {
 
 } from '@chakra-ui/react'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from '../../hooks/useForm'
 import { getDestiny } from '../../helpers/getDestiny'
 
@@ -38,6 +38,7 @@ export const SearchDestiny = ({setEnd}) => {
         })
         console.log(searchText)
         console.log(destiny)
+        setToggleSwitch('on') 
        
     }
     const handleClick = (lat, lon) =>{

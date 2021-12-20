@@ -83,17 +83,19 @@ export const MenuBar = () => {
                     <DrawerBody>
                         <Box w='100%' p={4}>
                             <Flex as={Link} to="/home" w='100%' my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
-                                <TriangleUpIcon w={6} h={6} mr='3' />
+                                {/* <TriangleUpIcon w={6} h={6} mr='3' /> */}
+                                <i className="fas fa-home icons"></i>
                                 <Text fontSize='xl'>Inicio</Text>
                             </Flex>
                             {/* <Flex as={Link} to="/history" w='100%' my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
                                 <RepeatClockIcon w={6} h={6} mr='3' />
                                 <Text fontSize='xl'>Historial</Text>
                             </Flex> */}
-                            {/* <Flex my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
-                                <WarningTwoIcon w={6} h={6} mr='3' />
+                            <Flex as={Link} to="/report" my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
+                                {/* <WarningTwoIcon w={6} h={6} mr='3' /> */}
+                                <i className="fas fa-mask icons"></i>
                                 <Text fontSize='xl'>Reportar Robo</Text>
-                            </Flex> */}
+                            </Flex>
                             <Flex as={Link} to="/settings" w='100%' my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
                                 <SettingsIcon w={6} h={6} mr='3' />
                                 <Text fontSize='xl'>Configuraciones</Text>
@@ -136,7 +138,7 @@ export const MenuBar = () => {
                         <Box w='100%' h='100%' overflowY='scroll'>
                             {stations.map((station, i) => (
                                 <Box key={i} display='flex' flexDir='column'>
-                                    <Box display='flex' alignItems='center' my='10px'>
+                                    <Box display='flex' alignItems='center' my='10px' >
                                         <Image boxSize='40px' mr='5px' src='https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637827/WaBike/EnCicla_Shadow_qn7zdy.svg' alt='Icon_Graph' />
                                         <Text onClick={() =>{localStorage.setItem('sta',station.id)}} w='350px' fontSize='17' color='#242E42' fontWeight='regular' cursor='pointer' _active={{ transform: 'scale(0.98)' }}>{station.name}</Text>
                                     </Box>

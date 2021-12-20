@@ -8,9 +8,9 @@ import {
 
 } from '@chakra-ui/react'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from '../../hooks/useForm'
-import { getDestiny } from '../../helpers/getDestiny'
+import { getDestiny2 } from '../../helpers/getDestiny2'
 
 export const SearchDestiny2 = ({ setX, setY }) => {
 
@@ -34,7 +34,7 @@ export const SearchDestiny2 = ({ setX, setY }) => {
         e.preventDefault();
         console.log('search query:',searchText)
         console.log('destiny search results',destiny)
-        getDestiny(searchText)
+        getDestiny2(searchText)
             .then((location) => {
                 setDestiny(destiny => location)
             })

@@ -36,14 +36,22 @@ const PathFinder = require("geojson-path-finder");
 let id = 'test-toast'
 
 export const CityMap = (props) => {
-
-    const toast = useToast()
+    
 
     let staId = Number(localStorage.getItem('sta'))
+    
     const staSelected = (staId) => {
         return stations.find(sta=> sta.id == staId)
     }
+
     let station = staSelected(staId)
+    console.log(staId)
+    console.log(station)
+    
+
+    const toast = useToast()
+
+
 
 
     const markerIcon = new L.Icon({
@@ -184,6 +192,10 @@ export const CityMap = (props) => {
         );
         console.log('currentPosition Obj: ', currentPosition)
         setgeojsonMark(geojsonMark => path);
+            if(station){
+                setX(station.lon)
+                setY(station.lat)
+            }
         // console.log("path vector", geojsonMark);
 
             //setting destiny marker location 

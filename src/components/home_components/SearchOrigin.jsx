@@ -24,16 +24,22 @@ export const SearchOrigin = ({setStart}) => {
     const { searchText } = values
     // console.log(searchText)
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     getOrigin(searchText)
+    //     .then((location) =>{
+    //         setOrigin(location)
+    //     })
+    // }, [searchText])
+
+    const handleSearch = (e) => {
+        e.preventDefault();
         getOrigin(searchText)
         .then((location) =>{
             setOrigin(location)
         })
-    }, [searchText])
-    const handleSearch = (e) => {
-        e.preventDefault();
         console.log(searchText)
         console.log(origin)
+        setToggleSwitch('on')
         
     }
     const handleClick = (lat, lon) =>{
