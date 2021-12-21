@@ -8,13 +8,13 @@ const BaseLayer = () => {
     dark:
       "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
     pastel:
-      "https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=Dw8w4nly4yujOdGMsjUu"
+      "https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=USIMhiPPy3RaiD4swRnR"
 
   });
 
   return (
     <>
-      <LayersControl.BaseLayer  name="Light">
+      <LayersControl.BaseLayer  name="Información">
         <TileLayer
           url={maps.light}
         />
@@ -28,7 +28,7 @@ const BaseLayer = () => {
         />
       </LayersControl.BaseLayer>
 
-      <LayersControl.BaseLayer checked name="Pastel">
+      <LayersControl.BaseLayer checked name="WaBike">
         <TileLayer
           url={maps.pastel}
         />
