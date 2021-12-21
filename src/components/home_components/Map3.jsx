@@ -78,6 +78,13 @@ export const CityMap = (props) => {
         popupAnchor: [0, -46], //[left/right, top/bottom]
 
     })
+    const markerAcademiaGeek = new L.Icon({
+        iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1640116439/WaBike/AG_arfgq6.svg',
+        iconSize: [50, 50],
+        iconAnchor: [17, 46], //[left/right, top/bottom]
+        popupAnchor: [0, -46], //[left/right, top/bottom]
+
+    })
 
     const [currentPosition, setCurrentPosition] = useState([-75.58779741288164, 6.241221838754799])
 
@@ -321,6 +328,11 @@ export const CityMap = (props) => {
             <SearchDestiny2 setX={setX} setY={setY} />
             <MapContainer center={[6.256, -75.59]} zoom={15} >
                 <SwitchToDraggableMarker position="bottomright" style={{ marginBottom: "40px" }} />
+                <Marker icon={markerAcademiaGeek} position={[6.235199899586357, -75.57073258566678]}>
+                    <Popup>
+                        
+                    </Popup>
+                </Marker>
                 <LayersControl position="topright">
                     <BaseLayer />
                     <LayersControl.Overlay checked name="Ciclorutas">
