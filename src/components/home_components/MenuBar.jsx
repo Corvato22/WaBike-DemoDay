@@ -10,6 +10,9 @@ import {
     // DrawerFooter,
     // DrawerHeader,
     // DrawerCloseButton,
+    
+
+    
 } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
 import { startLogout } from '../../actions/loginAction'
@@ -44,6 +47,7 @@ export const MenuBar = () => {
     let getUserData = localStorage.getItem('userData')
     let userData = JSON.parse(getUserData)
 
+    
     return (
         <>
             <Box bg='#00BB9C' w='100%' h='48px' p={1}>
@@ -91,7 +95,7 @@ export const MenuBar = () => {
                                 <RepeatClockIcon w={6} h={6} mr='3' />
                                 <Text fontSize='xl'>Historial</Text>
                             </Flex> */}
-                            <Flex as={Link} to="/report" my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer'>
+                            <Flex as={Link} to="/report" my='5' _active={{ transform: 'scale(0.95)' }} cursor='pointer' >
                                 {/* <WarningTwoIcon w={6} h={6} mr='3' /> */}
                                 <i className="fas fa-mask icons"></i>
                                 <Text fontSize='xl'>Reportar Robo</Text>
@@ -140,7 +144,7 @@ export const MenuBar = () => {
                                 <Box key={i} display='flex' flexDir='column'>
                                     <Box display='flex' alignItems='center' my='10px' >
                                         <Image boxSize='40px' mr='5px' src='https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637827/WaBike/EnCicla_Shadow_qn7zdy.svg' alt='Icon_Graph' />
-                                        <Text onClick={() =>{localStorage.setItem('sta',station.id)}} w='350px' fontSize='17' color='#242E42' fontWeight='regular' cursor='pointer' _active={{ transform: 'scale(0.98)' }}>{station.name}</Text>
+                                        <Text onClick={() => { localStorage.setItem('sta', station.id) }} w='350px' fontSize='17' color='#242E42' fontWeight='regular' cursor='pointer' _active={{ transform: 'scale(0.98)' }}>{station.name}</Text>
                                     </Box>
                                     <Divider />
                                 </Box>
@@ -149,6 +153,8 @@ export const MenuBar = () => {
                     </Box>
                 </DrawerContent>
             </Drawer>
+
+
         </>
     )
 }
