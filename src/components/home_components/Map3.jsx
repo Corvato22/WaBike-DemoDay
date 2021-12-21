@@ -37,6 +37,9 @@ let id = 'test-toast'
 
 export const CityMap = (props) => {
 
+    let getUserData = localStorage.getItem('userData')
+    let userData = JSON.parse(getUserData)
+
 
     let staId = Number(localStorage.getItem('sta'))
 
@@ -78,9 +81,17 @@ export const CityMap = (props) => {
 
     const [currentPosition, setCurrentPosition] = useState([-75.58779741288164, 6.241221838754799])
 
-    //GENERATE MARKER FROM ACTUAL LOCATION
-    function LocationMarker() {
 
+    //GPS MARKER SWITCH TO DRAGGABLE MARKER
+
+    const POSITION_CLASSES = {
+        bottomleft: 'leaflet-bottom leaflet-left',
+        bottomright: 'leaflet-bottom leaflet-right',
+        topleft: 'leaflet-top leaflet-left',
+        topright: 'leaflet-top leaflet-right',
+    }
+
+    function SwitchToDraggableMarker({ position }) {
         const map = useMapEvents({
             click() {
                 map.locate()
@@ -92,9 +103,90 @@ export const CityMap = (props) => {
             },
         })
 
+        // Memoize the minimap so it's not affected by position changes
+        const minimap = useMemo(
+            () => (
+                <Box bg='white' w='44px' h='44px' display='flex' alignItems='center' justifyContent='center' borderRadius='6px' cursor='pointer' _hover={{ bg: '#dedede' }}>
+                    <Image w='32px' opacity='0.7' src='https://res.cloudinary.com/dzyyi4p7x/image/upload/v1640063138/WaBike/compass-regular_fkukf1.svg'></Image>
+                </Box>
+            ),
+            [],
+        )
+
+        const positionClass =
+            (position && POSITION_CLASSES[position]) || POSITION_CLASSES.bottomright
+        return (
+            <div className={positionClass}>
+                <div className="leaflet-control leaflet-bar">{minimap}</div>
+            </div>
+        )
+    }
+
+
+    //GENERATE MARKER FROM ACTUAL LOCATION
+    const originPositionRef = useRef(null);
+
+    const [markerDraggedOrigin, setMarkerDraggedOrigin] = useState(false)
+    const eventHandlersOrigin = useMemo(
+        () => ({
+            dragend() {
+                const marker = originPositionRef.current;
+                if (marker != null) {
+                    console.log(marker.getLatLng());
+                    setCurrentPosition(marker.getLatLng())
+                    setMarkerDraggedOrigin(true);
+                }
+            }
+        }),
+        []
+    );
+    function LocationMarker() {
+
+        // const map = useMapEvents({
+        //     click() {
+        //         map.locate()
+        //     },
+        //     locationfound(e) {
+        //         setCurrentPosition(e.latlng)
+        //         map.flyTo(e.latlng, map.getZoom())
+        //         console.log('current latlong: ', e.latlng)
+        //     },
+        // })
+
         return currentPosition === null ? null : (
-            <Marker position={currentPosition} icon={markerOrigin}>
-                <Popup>You are here</Popup>
+            <Marker
+                ref={originPositionRef}
+                eventHandlers={eventHandlersOrigin}
+                draggable={true}
+                position={currentPosition}
+                icon={markerOrigin}>
+                <Popup>
+                    <Center py={3}>
+                        <Box
+                            maxW={'100px'}
+                            w='100px'
+                            rounded={'md'}
+
+                        >
+                            <Image
+                                src={userData.usrImg}
+                                alt={userData.name}
+                                rounded={'md'}
+                                objectFit='cover'
+                            />
+                            <Center>
+                                <Text
+                                    color='#00BB9C'
+                                    textTransform={'uppercase'}
+                                    fontSize={'12px'}
+                                    m='0px'
+                                    fontWeight={800}>
+                                    Estás aquí
+                                </Text>
+                            </Center>
+                        </Box>
+                    </Center>
+                </Popup>
             </Marker>
         )
     }
@@ -102,8 +194,8 @@ export const CityMap = (props) => {
     //DESTINATION MARKER
     const destinationPositionRef = useRef(null);
 
-    const [x, setX] = useState(-75.58781504631042)
-    const [y, setY] = useState(6.253109277534587)
+    const [x, setX] = useState(-75.57017775568262)
+    const [y, setY] = useState(6.235342250684619)
     const [markerDragged, setMarkerDragged] = useState(false)
     const eventHandlers = useMemo(
         () => ({
@@ -165,18 +257,22 @@ export const CityMap = (props) => {
         );
         console.log('path 44', patth)
         if (patth) {
+            toast.closeAll()
             return patth.path;
         } else {
             console.log('path not found')
-            if (!patth) {
-                toast({
-                    id,
-                    title: 'Ups!',
-                    description: "No pudimos encontrar un ruta exacta, intenta con una posición cercana",
-                    status: 'info',
-                    duration: 1500,
-                    isClosable: true,
-                })
+            if (!toast.isActive(2)) {
+                if (patth === null) {
+                    console.log('inside validation of toast')
+                    toast({
+                        id: 2,
+                        title: 'Ups!',
+                        description: "No pudimos encontrar un ruta exacta, intenta con una posición cercana",
+                        status: 'info',
+                        duration: 1000,
+                        isClosable: true,
+                    })
+                }
             }
         }
     }
@@ -185,8 +281,8 @@ export const CityMap = (props) => {
     //GETTING GEOJSON DATA WITH AXIOS GET FROM GITHUB and then GENERATING THE ROUTE 
     useEffect(() => {
         let path = findRouteThroughAGeoJson(
-            // [currentPosition.lng, currentPosition.lat],
-            [-75.6091868877411, 6.25872970393618],
+            [currentPosition.lng, currentPosition.lat],
+            // [-75.6091868877411, 6.25872970393618],
 
             [x, y],
             network
@@ -224,6 +320,7 @@ export const CityMap = (props) => {
         <>
             <SearchDestiny2 setX={setX} setY={setY} />
             <MapContainer center={[6.256, -75.59]} zoom={15} >
+                <SwitchToDraggableMarker position="bottomright" style={{ marginBottom: "40px" }} />
                 <LayersControl position="topright">
                     <BaseLayer />
                     <LayersControl.Overlay checked name="Ciclorutas">
@@ -245,7 +342,7 @@ export const CityMap = (props) => {
                             ))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay name="Estaciones EnCicla">
+                    <LayersControl.Overlay checked name="Estaciones EnCicla">
                         <LayerGroup>
 
                             {stations.map((station, i) => (
@@ -257,27 +354,33 @@ export const CityMap = (props) => {
                                                 w='250px'
                                                 rounded={'md'}
                                             >{
-
                                                     station.picture === "0" ?
                                                         <Image
                                                             src={'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639886877/WaBike/Enclicla_no_disponible_s0rq6p.png'}
-                                                            alt={station.nameZona}
+                                                            alt={station.name}
                                                             rounded={'md'}
                                                             objectFit='cover'
                                                         /> :
                                                         <Image
                                                             src={station.picture}
-                                                            alt={station.nameZona}
+                                                            alt={station.name}
                                                             rounded={'md'}
                                                             objectFit='cover'
                                                         />
                                                 }
                                                 <Box>
                                                     <Text
+                                                        onClick={() => {
+                                                            setX(station.lon)
+                                                            setY(station.lat)
+                                                        }}
                                                         color='#00BB9C'
                                                         textTransform={'uppercase'}
                                                         fontSize={'16px'}
-                                                        fontWeight={800}>
+                                                        fontWeight={800}
+                                                        cursor='pointer'
+                                                        _hover={{ textDecoration: 'underline' }}
+                                                    >
                                                         {station.name}
                                                     </Text>
                                                     <Text
