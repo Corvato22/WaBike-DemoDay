@@ -20,7 +20,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import stations from "../../data/enCicla";
 
 
-export const MenuBar = () => {
+export const MenuBar2 = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate();

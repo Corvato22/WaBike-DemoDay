@@ -34,10 +34,15 @@ export const useMapbox = (ptoInit) => {
         const addMarker = useCallback((ev, id)=>{
             //capturar la longitud y latitud con el evento click
             const {lng,lat} = ev.lngLat || ev;
+            
+            const el = document.createElement('div');
+            el.className = 'marker';
             //crear marcador
-            const marker = new mapboxgl.Marker()
+            const marker = new mapboxgl.Marker(el)
             //se ocupara un uuid único para establecer un identificador único al marcador
             marker.id =id ?? v4()
+
+            
 
             marker
                 .setLngLat([lng, lat])
