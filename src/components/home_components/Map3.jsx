@@ -52,8 +52,6 @@ export const CityMap = (props) => {
     const toast = useToast()
 
 
-
-
     const markerIcon = new L.Icon({
         iconUrl: 'https://res.cloudinary.com/dzyyi4p7x/image/upload/v1639637700/WaBike/EnCicla_ct5b8v.svg',
         iconSize: [40, 40],
@@ -165,18 +163,26 @@ export const CityMap = (props) => {
         );
         console.log('path 44', patth)
         if (patth) {
+            toast.closeAll()
             return patth.path;
         } else {
+            
             console.log('path not found')
-            if (!patth) {
-                toast({
-                    id,
-                    title: 'Ups!',
-                    description: "No pudimos encontrar un ruta exacta, intenta con una posición cercana",
-                    status: 'info',
-                    duration: 1500,
-                    isClosable: true,
-                })
+            if (!toast.isActive(2)) {
+                
+                if (patth === null) {
+                    console.log('inside validation of toast')
+
+                    toast({
+                        id: 2,
+                        title: 'Ups!',
+                        description: "No pudimos encontrar un ruta exacta, intenta con una posición cercana",
+                        status: 'info',
+                        duration: 1000,
+                        isClosable: true,
+                    })
+                    
+                }
             }
         }
     }
