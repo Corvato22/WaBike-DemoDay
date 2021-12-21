@@ -77,6 +77,9 @@
     background-size: cover;
     width: 50px;
     height: 65px;
-    border-radius: 50%;
+    border-radius: 0%;
     cursor: pointer;
+  }
+.intro{
+    font-size: 50px
   }
