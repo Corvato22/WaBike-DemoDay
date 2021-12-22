@@ -13,6 +13,14 @@ import {
 import { Link } from "react-router-dom";
 
 const MyLocation = () => {
+
+    let getUserData = localStorage.getItem('userData')
+    let userData = JSON.parse(getUserData)
+
+    // useEffect(() => {
+    //     console.log(register)
+    // }, [])
+
     return (
         <>
             <Banner2>
@@ -21,12 +29,12 @@ const MyLocation = () => {
             <Container>
                 <VStack mt='25%' spacing='3px' textAlign='center' >
                     <Heading as='h2' size='2xl' fontFamily='Montserrat' color='#242E42' >
-                        ¡Hola, un placer conocerte!
+                        ¡Hola {userData.name.split(" ")[0]}, un placer conocerte!
                     </Heading>
                     <br />
                     <Text fontSize='2xl' color='#262628'>Encuentra las mejores rutas para llegar a tu destino. ¡Seguro y rápido!</Text>
                     <br />
-                    <Text fontSize='2xl' color='#262628'>Déjanos saber tu úbicación para empezar</Text>
+                    <Text fontSize='2xl' color='#262628'>Déjanos saber tu ubicación para empezar</Text>
                     <br />
                     <Button
                         variant="outline"

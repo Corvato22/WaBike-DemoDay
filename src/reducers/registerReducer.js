@@ -5,8 +5,8 @@ export const registerReducer = (state = {}, action) => {
         case types.register:
             return {
                 ...state,
-                usrImg: action.payload.usrImg,
                 newUser: action.payload
+                // usrImg: action.payload.usrImg,
                 // email: action.payload.email,
                 // password: action.payload.password,
                 // name: action.payload.name

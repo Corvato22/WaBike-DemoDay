@@ -18,6 +18,7 @@
     }
 }
 
+/* Interface styles */
 .LogoText:before {
     content: attr(data-content);
     font-weight: bold;
@@ -27,12 +28,64 @@
     color: #00BB9C;
     animation: loading 10s linear;
 }
-.fa-user{
+
+.fa-user {
     color: lightgray;
 }
 
 
-.leaflet-container{
+/* Maps styles */
+.leaflet-container {
+    width: 100%;
+    height: 91vh;
+}
+
+
+/* .leaflet-control-container {
+    display: none;
+} */
+.listLoc {
+    cursor: pointer;
+}
+
+.listLoc:hover {
+    background-color: lightgrey;
+}
+
+.off {
+    display: none;
+
+}
+
+.mapContainer {
     width: 100%;
     height: 100vh;
 }
+
+.info {
+    position: fixed;
+    z-index: 99;
+    top: 50px;
+    left: 20px;
+    padding: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+
+}
+
+.icons {
+    font-size: 1.5rem;
+    padding-right: 0.5rem;
+}
+.marker {
+    background-image: url('https://res.cloudinary.com/dzyyi4p7x/image/upload/v1640060426/WaBike/thief_Marker_dlcjr0.svg');
+    background-size: cover;
+    width: 50px;
+    height: 65px;
+    border-radius: 0%;
+    cursor: pointer;
+  }
+.intro{
+    font-size: 50px
+  }

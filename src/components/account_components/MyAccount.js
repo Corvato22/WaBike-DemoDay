@@ -4,6 +4,10 @@ import { Heading, Spacer, Avatar, Wrap, WrapItem, Box, Flex, Table, Tbody, Tr, T
 import { Link } from 'react-router-dom'
 
 export const MyAccount = () => {
+
+    let getUserData = localStorage.getItem('userData')
+    let userData = JSON.parse(getUserData)
+
     return (
         <>
             <Box bg='#00BB9C'>
@@ -14,7 +18,7 @@ export const MyAccount = () => {
                     <Spacer />
                     <Wrap my='3' mx='2' justify='end'>
                         <WrapItem>
-                            <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
+                            <Avatar name={userData.name} src={userData.usrImg} />
                         </WrapItem>
                     </Wrap>
                 </Flex>
@@ -28,16 +32,11 @@ export const MyAccount = () => {
                     <Tbody>
                         <Tr>
                             <Td>Nombre</Td>
-                            <Td>Jon Mircha</Td>
+                            <Td>{userData.name}</Td>
                         </Tr>
                         <Tr>
                             <Td>Email</Td>
-                            <Td>mircha@gmail.com</Td>
-
-                        </Tr>
-                        <Tr>
-                            <Td>Fecha de nacimiento</Td>
-                            <Td>05/4/2000</Td>
+                            <Td>{userData.email}</Td>
                         </Tr>
                     </Tbody>
 

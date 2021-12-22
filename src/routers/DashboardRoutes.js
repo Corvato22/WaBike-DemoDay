@@ -7,6 +7,7 @@ import MyLocation from '../containers/MyLocation'
 import MyLocation2 from '../containers/MyLocation2'
 import { Home } from '../containers/Home'
 import { Navigate } from 'react-router-dom';
+import { TheftReport } from '../containers/TheftReport'
 
 
 const DashboardRoutes = () => {
@@ -21,6 +22,7 @@ const DashboardRoutes = () => {
         <Route path="/myaccount" element={<MyAccount />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/history" element={<RoutesHistory />} />
+        <Route path="/report" element={<TheftReport />} />
         <Route path='/*' element={<Navigate to="/mylocation" />} />
 
       </Routes>
