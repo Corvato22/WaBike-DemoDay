@@ -330,7 +330,7 @@ export const CityMap = (props) => {
                 <SwitchToDraggableMarker position="bottomright" style={{ marginBottom: "40px" }} />
                 <Marker icon={markerAcademiaGeek} position={[6.235199899586357, -75.57073258566678]}>
                     <Popup>
-                        
+                        <Image src={'https://academiageek.co/wp-content/uploads/2021/03/Logo-AG-2021.png'}></Image>
                     </Popup>
                 </Marker>
                 <LayersControl position="topright">
